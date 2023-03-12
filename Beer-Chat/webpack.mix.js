@@ -12,4 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .js('resources/js/authentication.js', 'public/js')
+    .sass('resources/sass/app.sass', 'public/css')
+    .postCss('resources/sass/login.css', 'public/css')
+    .postCss('resources/css/reset200802.css', 'public/css');
