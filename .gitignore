@@ -21,3 +21,7 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+
+Beer-Chat/.idea/
+
+Beer-Chat/package-lock.json

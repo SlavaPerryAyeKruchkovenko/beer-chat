@@ -1,0 +1,129 @@
+.login {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background: whitesmoke;
+  font-size: 24px;
+  justify-content: center;
+  font-family: "Ubuntu", sans-serif;
+}
+.login .login-sign {
+  padding: 2em 1em;
+  justify-content: space-evenly;
+  display: flex;
+  flex-direction: column;
+}
+@media only screen and (max-width: 350px) {
+  .login .login-sign {
+    padding: 0;
+  }
+}
+.login .login-title {
+  text-align: center;
+  margin: 0;
+  font-size: 1.5em;
+  width: 100%;
+}
+.login .login-body {
+  position: relative;
+  min-width: 300px;
+}
+@media only screen and (max-width: 320px) {
+  .login .login-body {
+    min-width: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.login-form {
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+}
+.login-form #nickname {
+  border-radius: 6px;
+  border: 2px solid grey;
+}
+.login-form #nickname, .login-form #password {
+  outline: none;
+  color: gray;
+}
+.login-form #submit {
+  background: #888888;
+  border-radius: 6px;
+  color: white;
+}
+.login-form #submit, .login-form #nickname, .login-form #password {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  font-size: 18px;
+  padding: 6px 12px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.login-form #submit, .login-form #nickname {
+  min-width: 100%;
+}
+.login-form .submit-btn {
+  position: relative;
+  align-items: center;
+  cursor: pointer;
+}
+.login-form .submit-btn .log-in {
+  position: absolute;
+  right: 12px;
+}
+.login-form .separator {
+  margin: 8px 0;
+}
+
+.password-block {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+}
+.password-block #password {
+  width: 90%;
+  border-radius: 6px 0 0 6px;
+  border: 2px solid grey;
+  border-right: none;
+}
+.password-block .eye {
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c4c4c4;
+  border-radius: 0 6px 6px 0;
+  border: 2px solid grey;
+  border-left: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.another-links {
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+.another-links .link {
+  display: flex;
+  align-items: center;
+  margin: 2px 0;
+}
+.another-links .left {
+  text-align: left;
+}
+.another-links .right {
+  text-align: right;
+}
+.another-links .back-link {
+  text-decoration: none;
+  color: blue;
+}
+
+/*# sourceMappingURL=login.css.map */
