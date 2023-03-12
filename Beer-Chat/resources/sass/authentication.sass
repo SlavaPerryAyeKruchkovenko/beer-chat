@@ -7,6 +7,7 @@
     font-size: 24px
     justify-content: center
     font-family: 'Ubuntu', sans-serif
+    overflow-y: hidden
 
     .login-sign
         padding: 2em 1em
@@ -36,11 +37,11 @@
     flex-direction: column
     margin-top: 12px
 
-    #nickname
+    .login-form-input
         border-radius: 6px
         border: 2px solid grey
 
-    #nickname, #password
+    input
         outline: none
         color: gray
 
@@ -49,7 +50,7 @@
         border-radius: 6px
         color: white
 
-    #submit, #nickname, #password
+    input, button
         font-family: 'Ubuntu', sans-serif
         margin: 0
         font-size: 18px
@@ -70,13 +71,30 @@
             right: 12px
     .separator
         margin: 8px 0
+        position: relative
+
+
+    @media only screen and (min-width: 350px)
+
+        .required::after
+            content: "*"
+            color: red
+            position: absolute
+            right: -18px
+            top: 0
+
+    @media only screen and (max-width: 350px)
+        .required:has(input:placeholder-shown) .eye,.required > input:placeholder-shown
+            border-color: #e32636
+        .required:has(input:not(:placeholder-shown)) .eye
+            border-color: gray
 
 .password-block
     width: 100%
     display: flex
     align-items: stretch
 
-    #password
+    .password
         width: 90%
         border-radius: 6px 0 0 6px
         border: 2px solid grey
@@ -89,8 +107,8 @@
         justify-content: center
         background: #c4c4c4
         border-radius: 0 6px 6px 0
-        border: 2px solid grey
-        border-left: none
+        border: 2px solid gray
+        border-left-style: none
         box-sizing: border-box
         cursor: pointer
 

@@ -15,14 +15,17 @@ const authenticationVM = {
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
-    const eye = document.getElementById('eye')
-    eye.onclick = () => {
-        const isVisible = authenticationVM.changePasswordVisible("password")
-        if(isVisible){
-            eye.innerHTML = feather.toSvg('eye-off',{ class: 'eye-btn' })
+    const eyes = document.getElementsByClassName('eye')
+    Array.from(eyes).forEach((eye,index)=>{
+        const number = index===0?'':index+1
+        eye.onclick = () => {
+            const isVisible = authenticationVM.changePasswordVisible("password"+number)
+            if(isVisible){
+                eye.innerHTML = feather.icons['eye-off'].toSvg({ class: 'eye-btn' })
+            }
+            else{
+                eye.innerHTML = feather.icons['eye'].toSvg({ class: 'eye-btn' })
+            }
         }
-        else{
-            eye.innerHTML = feather.toSvg('eye',{ class: 'eye-btn' })
-        }
-    }
+    })
 });

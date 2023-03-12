@@ -1,7 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/css/login.css": "/css/login.css",
+    "/css/authentication.css": "/css/authentication.css",
     "/css/reset200802.css": "/css/reset200802.css",
     "/js/authentication.js": "/js/authentication.js"
 }

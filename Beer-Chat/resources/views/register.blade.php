@@ -9,16 +9,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap" rel="stylesheet">
-    <title>Login</title>
+    <title>Register</title>
 
 </head>
 <body>
 <div class="login">
     <div class="login-sign">
-        <h1 class="login-title">Login🍺</h1>
+        <h1 class="login-title">Create Account🍻</h1>
         <div class="login-body">
             <form class="login-form" >
-                <p class="separator">
+                <p class="separator required">
+                    <input
+                        id="email"
+                        name="email"
+                        class="login-form-input"
+                        type="email"
+                        placeholder="Email" required>
+                </p>
+                <p class="separator required">
                     <input
                         id="nickname"
                         name="nickname"
@@ -26,8 +34,34 @@
                         type="text"
                         placeholder="Nickname" required>
                 </p>
-                <div class="separator password-block">
-                    <input id="password" class="password" required type="password" placeholder="Password" minlength="3">
+                <p class="separator">
+                    <input
+                        id="username"
+                        name="username"
+                        class="login-form-input"
+                        type="text"
+                        placeholder="Username">
+                </p>
+                <div class="separator password-block required">
+                    <input
+                        id="password"
+                        name="password"
+                        class="password"
+                        required type="password"
+                        placeholder="Password"
+                        minlength="3">
+                    <div class="eye">
+                        <i data-feather="eye" class="icon"></i>
+                    </div>
+                </div>
+                <div class="password-block separator required">
+                    <input
+                        id="password2"
+                        name="password2"
+                        class="password"
+                        required type="password"
+                        placeholder="Repeat password"
+                        minlength="3">
                     <div class="eye">
                         <i data-feather="eye" class="icon"></i>
                     </div>
@@ -42,7 +76,7 @@
             <div class="another-links">
                 <a class="back-link link left" href="#">
                     <i data-feather="arrow-left" class="icon"></i>
-                    <span>сreate account</span>
+                    <span>already have an account?</span>
                 </a>
                 <a class="back-link link right" href="#">
                     <span>forgot password?</span>
