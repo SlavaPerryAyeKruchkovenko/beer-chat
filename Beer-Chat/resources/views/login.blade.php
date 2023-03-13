@@ -40,12 +40,12 @@
                 </p>
             </form>
             <div class="another-links">
-                <a class="back-link link left" href="#">
+                <a class="back-link link left" href="{{route('register')}}">
                     <i data-feather="arrow-left" class="icon"></i>
-                    <span>сreate account</span>
+                    <span>Create account</span>
                 </a>
                 <a class="back-link link right" href="#">
-                    <span>forgot password?</span>
+                    <span>Forgot password?</span>
                     <i data-feather="arrow-right" class="icon"></i>
                 </a>
             </div>

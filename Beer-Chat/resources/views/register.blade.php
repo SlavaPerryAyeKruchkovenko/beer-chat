@@ -17,7 +17,7 @@
     <div class="login-sign">
         <h1 class="login-title">Create Account🍻</h1>
         <div class="login-body">
-            <form class="login-form" >
+            <form class="login-form" action="{{ route('register') }}}" method="post">
                 <p class="separator required">
                     <input
                         id="email"
@@ -74,13 +74,9 @@
                 </p>
             </form>
             <div class="another-links">
-                <a class="back-link link left" href="#">
+                <a class="back-link link left" href="{{route('login')}}">
                     <i data-feather="arrow-left" class="icon"></i>
-                    <span>already have an account?</span>
-                </a>
-                <a class="back-link link right" href="#">
-                    <span>forgot password?</span>
-                    <i data-feather="arrow-right" class="icon"></i>
+                    <span>Already have account?</span>
                 </a>
             </div>
         </div>
