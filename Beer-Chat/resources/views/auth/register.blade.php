@@ -17,22 +17,33 @@
     <div class="login-sign">
         <h1 class="login-title">Create Account🍻</h1>
         <div class="login-body">
-            <form class="login-form" action="{{ route('register') }}}" method="post">
-                <p class="separator required">
+            <form class="login-form" action="{{ route('register') }}" novalidate method="post" autocomplete="off">
+                @csrf
+                <div class="{{ $errors->has('email') ? 'error-separator' : 'separator' }} required">
                     <input
                         id="email"
                         name="email"
-                        class="login-form-input"
+                        class="{{ $errors->has('email') ? 'login-form-input-error' : 'login-form-input' }}"
                         type="email"
-                        placeholder="Email" required>
-                </p>
+                        placeholder="Email" required/>
+                    @error('email')
+                    <div class="login-form-error">
+                        <i data-feather="alert-circle" class="alert"></i>
+                    </div>
+                    @enderror
+                </div>
+                @error('email')
+                <div class="error-text">
+                    <span>{{ $message }}</span>
+                </div>
+                @enderror
                 <p class="separator required">
                     <input
                         id="nickname"
                         name="nickname"
                         class="login-form-input"
                         type="text"
-                        placeholder="Nickname" required>
+                        placeholder="Nickname" required />
                 </p>
                 <p class="separator">
                     <input
@@ -49,7 +60,7 @@
                         class="password"
                         required type="password"
                         placeholder="Password"
-                        minlength="3">
+                        minlength="8">
                     <div class="eye">
                         <i data-feather="eye" class="icon"></i>
                     </div>
@@ -60,8 +71,8 @@
                         name="password2"
                         class="password"
                         required type="password"
-                        placeholder="Repeat password"
-                        minlength="3">
+                        placeholder="confirm password"
+                        minlength="8">
                     <div class="eye">
                         <i data-feather="eye" class="icon"></i>
                     </div>

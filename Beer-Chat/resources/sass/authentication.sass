@@ -1,3 +1,5 @@
+$error: #e32636
+
 .login
     width: 100vw
     height: 100vh
@@ -37,9 +39,27 @@
     flex-direction: column
     margin-top: 12px
 
+    .login-form-error
+        position: absolute
+        right: 12px
+        top: calc(50% - 9px)
+        height: 18px
+        color: $error
+        display: flex
+        align-items: center
+        justify-content: center
+
+        .alert
+            width: 18px
+            height: 18px
+
     .login-form-input
         border-radius: 6px
         border: 2px solid grey
+
+    .login-form-input-error
+        border-radius: 6px
+        border: 2px solid $error
 
     input
         outline: none
@@ -73,12 +93,24 @@
         margin: 8px 0
         position: relative
 
+    .error-separator
+        margin-top: 8px
+        position: relative
+
+    .error-text
+        width: 100%
+        margin-top: 4px
+        margin-bottom: 4px
+        font-size: 14px
+        span
+            color: $error
+            text-align: left
 
     @media only screen and (min-width: 350px)
 
         .required::after
             content: "*"
-            color: red
+            color: $error
             position: absolute
             right: -18px
             top: 0
