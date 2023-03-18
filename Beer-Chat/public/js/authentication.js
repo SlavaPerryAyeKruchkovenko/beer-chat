@@ -2523,6 +2523,9 @@ var authenticationVM = {
       return false;
     }
     return true;
+  },
+  stopRefreshPage: function stopRefreshPage(e) {
+    e.preventDefault();
   }
 };
 document.addEventListener("DOMContentLoaded", function () {
@@ -2542,6 +2545,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
   });
+  /*const form = document.getElementById("registerForm");
+  form.addEventListener('submit', authenticationVM.stopRefreshPage);*/
 });
 
 /***/ }),
