@@ -8,7 +8,6 @@ use App\Providers\RouteServiceProvider;
 use \Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -32,7 +31,7 @@ class LoginController extends Controller
         return redirect()->intended(RouteServiceProvider::MESSENGER);
     }
 
-    public function destroy(Request $request){
+    public function destroy(){
         Auth::logout();
         return redirect(RouteServiceProvider::HOME);
     }

@@ -34,10 +34,10 @@ $error: #e32636
             max-width: 100%
 
 .login-form
-    margin-bottom: 1em
+    margin-bottom: 18px
     display: flex
     flex-direction: column
-    margin-top: 12px
+    margin-top: 10px
 
     .login-form-error
         position: absolute
@@ -156,8 +156,10 @@ $error: #e32636
         margin: 2px 0
     .left
         text-align: left
+
     .right
         text-align: right
+        margin-left: 18px
     .back-link
         text-decoration: none
         color: blue
@@ -209,3 +211,28 @@ $error: #e32636
     .custom-checkbox:disabled+label::before
         background-color: #e9ecef
 
+.notification
+    position: relative
+    margin-top: 18px
+    height: 66px
+    @media only screen and (max-width: 260px)
+        height: 93px
+
+    .notification-block
+        position: absolute
+        display: flex
+        align-items: center
+        background-color: #198754
+        color: #fff
+        font-weight: 700
+        box-sizing: border-box
+        padding: 6px 12px
+        border-radius: 12px
+        font-size: 18px
+        .icon
+            color: #fff
+        .text
+            margin: 0 12px
+            line-height: 27px
+        .close
+            cursor: pointer

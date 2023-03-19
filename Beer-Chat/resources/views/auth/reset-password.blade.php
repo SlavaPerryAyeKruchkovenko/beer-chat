@@ -9,31 +9,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap" rel="stylesheet">
-    <title>Login</title>
+    <title>Reset Password</title>
 
 </head>
 <body>
 <div class="login">
     <div class="login-sign">
-        <h1 class="login-title">Login🍺</h1>
+        <h1 class="login-title">Reset password🍷</h1>
         <div class="login-body">
-            @if(session('status'))
-                <div class="notification">
-                    <div class="notification-block" role="alert" id="success-alert">
-                        <i data-feather="check-circle" class="icon"></i>
-                        <p class="text">{{session('status')}}</p>
-                        <i data-feather="x" class="icon close" id="close-alert"></i>
-                    </div>
-                </div>
-            @endif
             <form
                 class="login-form"
-                action="{{ route('login') }}"
+                action="{{ route('password.update') }}"
                 method="post"
                 novalidate
                 autocomplete="off"
                 id="loginForm">
                 @csrf
+                <input type="hidden" id="token" name="token" value="{{ $token }}">
                 <div class="{{ $errors->has('email') ? 'error-separator' : 'separator' }}">
                     <input
                         id="email"
@@ -42,7 +34,8 @@
                         type="email"
                         placeholder="Email"
                         required
-                        value="{{old('email')}}"/>
+                        readonly
+                        value="{{old('email', $email)}}"/>
                     @error('email')
                     <div class="login-form-error">
                         <i data-feather="alert-circle" class="alert"></i>
@@ -54,7 +47,7 @@
                     <span>{{ $message }}</span>
                 </div>
                 @enderror
-                <div class="{{ $errors->has('password') ? 'error-separator' : 'separator' }} password-block">
+                <div class="{{ $errors->has('password') ? 'error-separator' : 'separator' }} password-block required">
                     <input
                         id="password"
                         name="password"
@@ -68,20 +61,35 @@
                     </div>
                 </div>
                 @error('password')
-                <div class="error-text">
-                    <span>{{ $message }}</span>
-                </div>
+                @if ($message !== "The password confirmation does not match.")
+                    <div class="error-text">
+                        <span>{{ $message }}</span>
+                    </div>
+                @endif
                 @enderror
-                <div class="separator">
-                    <div class="remember-block">
-                        <input type="checkbox" id="remember" name="remember" class="custom-checkbox"/>
-                        <label for="remember">Remember me</label>
+                <div class="password-block separator required">
+                    <input
+                        id="password_confirmation"
+                        name="password_confirmation"
+                        class="password"
+                        required type="password"
+                        placeholder="confirm password"
+                        minlength="8">
+                    <div class="eye">
+                        <i data-feather="eye" class="icon"></i>
                     </div>
                 </div>
+                @error('password')
+                @if ($message === "The password confirmation does not match.")
+                    <div class="error-text">
+                        <span>{{ $message }}</span>
+                    </div>
+                @endif
+                @enderror
                 <p class="separator">
                     <button class="submit-btn" type="submit" id="submit">
-                        Continue
-                        <i data-feather="log-in" class="log-in icon"></i>
+                        Reset
+                        <i data-feather="edit" class="log-in icon"></i>
                     </button>
                 </p>
             </form>
@@ -90,8 +98,8 @@
                     <i data-feather="arrow-left" class="icon"></i>
                     <span>Create account</span>
                 </a>
-                <a class="back-link link right" href="{{route('password.email')}}">
-                    <span>Forgot password?</span>
+                <a class="back-link link left" href="{{route('login')}}">
+                    <span>Remember the password?</span>
                     <i data-feather="arrow-right" class="icon"></i>
                 </a>
             </div>

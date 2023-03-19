@@ -126,7 +126,7 @@
                 <p class="separator">
                     <button class="submit-btn" type="submit" id="submit">
                         Continue
-                        <i data-feather="log-in" class="log-in icon"></i>
+                        <i data-feather="user-plus" class="log-in icon"></i>
                     </button>
                 </p>
             </form>

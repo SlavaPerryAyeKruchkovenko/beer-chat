@@ -2526,6 +2526,10 @@ var authenticationVM = {
   },
   stopRefreshPage: function stopRefreshPage(e) {
     e.preventDefault();
+  },
+  deleteAlert: function deleteAlert() {
+    var alert = document.getElementById('success-alert');
+    alert.parentNode.parentNode.removeChild(alert.parentNode);
   }
 };
 document.addEventListener("DOMContentLoaded", function () {
@@ -2545,6 +2549,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
   });
+  var closeBtn = document.getElementById('close-alert');
+  if (closeBtn) {
+    closeBtn.addEventListener("click", authenticationVM.deleteAlert, false);
+  }
 });
 
 /***/ }),
