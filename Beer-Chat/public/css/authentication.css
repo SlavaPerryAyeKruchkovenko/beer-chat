@@ -39,10 +39,10 @@
 }
 
 .login-form {
-  margin-bottom: 1em;
+  margin-bottom: 18px;
   display: flex;
   flex-direction: column;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 .login-form .login-form-error {
   position: absolute;
@@ -177,6 +177,7 @@
 }
 .another-links .right {
   text-align: right;
+  margin-left: 18px;
 }
 .another-links .back-link {
   text-decoration: none;
@@ -230,4 +231,37 @@
 }
 .remember-block .custom-checkbox:disabled + label::before {
   background-color: #e9ecef;
+}
+
+.notification {
+  position: relative;
+  margin-top: 18px;
+  height: 66px;
+}
+@media only screen and (max-width: 260px) {
+  .notification {
+    height: 93px;
+  }
+}
+.notification .notification-block {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  background-color: #198754;
+  color: #fff;
+  font-weight: 700;
+  box-sizing: border-box;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 18px;
+}
+.notification .notification-block .icon {
+  color: #fff;
+}
+.notification .notification-block .text {
+  margin: 0 12px;
+  line-height: 27px;
+}
+.notification .notification-block .close {
+  cursor: pointer;
 }

@@ -21,7 +21,7 @@ Route::get('/forgot-password', [ForgotPasswordController::class, 'create']) -> m
 Route::post('/forgot-password', [ForgotPasswordController::class, 'store']) -> middleware('guest') -> name('password.email');;
 
 Route::get('/reset-password', [ResetPasswordController::class, 'create']) -> middleware('guest') -> name('password.reset');
-/*Route::post('/forgot-password', [ForgotPasswordController::class, 'store']) -> middleware('guest');*/
+Route::post('/reset-password', [ResetPasswordController::class, 'store']) -> middleware('guest') -> name('password.update');
 
 Route::get(RouteServiceProvider::MESSENGER,function () {
     return view('messenger');

@@ -15,10 +15,14 @@ const authenticationVM = {
     },
     stopRefreshPage: (e) => {
         e.preventDefault()
+    },
+    deleteAlert: ()=>{
+        const alert = document.getElementById('success-alert')
+        alert.parentNode.parentNode.removeChild(alert.parentNode);
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
-    const eyes = document.getElementsByClassName('eye')
+    const eyes = document.getElementsByClassName('eye');
     Array.from(eyes).forEach((eye,index)=>{
         const number = index===0?'':index+1
         eye.onclick = () => {
@@ -31,4 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     })
+    const closeBtn = document.getElementById('close-alert');
+    if(closeBtn){
+        closeBtn.addEventListener("click", authenticationVM.deleteAlert, false);
+    }
 });
