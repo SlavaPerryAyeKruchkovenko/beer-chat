@@ -81,7 +81,7 @@
                     <i data-feather="arrow-left" class="icon"></i>
                     <span>Create account</span>
                 </a>
-                <a class="back-link link right" href="{{route('forgot-password')}}">
+                <a class="back-link link right" href="{{route('password.email')}}">
                     <span>Forgot password?</span>
                     <i data-feather="arrow-right" class="icon"></i>
                 </a>

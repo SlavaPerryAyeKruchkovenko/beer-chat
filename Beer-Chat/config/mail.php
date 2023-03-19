@@ -36,11 +36,17 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            "host" => "app.debugmail.io",
+            "port" => "25",
+            "from" => array(
+                "address" => "john.doe@example.org",
+                "name" => "John Doe"
+            ),
+            "encryption" => "tls",
+            "username" => "a3b31e3d-fd31-4b73-9061-ad4da3d594f6",
+            "password" => "11265b85-02e9-43dc-b892-1f37a6548dc5",
+            "sendmail" => "/usr/sbin/sendmail -bs",
+            "pretend" => false,
             'timeout' => null,
             'auth_mode' => null,
         ],

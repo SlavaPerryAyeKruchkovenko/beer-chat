@@ -19,7 +19,7 @@
         <div class="login-body">
             <form
                 class="login-form"
-                action="{{ route('forgot-password') }}"
+                action="{{ route('password.email') }}"
                 method="post"
                 novalidate
                 autocomplete="off"
