@@ -17,21 +17,52 @@
     <div class="login-sign">
         <h1 class="login-title">Login🍺</h1>
         <div class="login-body">
-            <form class="login-form" >
-                <p class="separator">
+            <form
+                class="login-form"
+                action="{{ route('login') }}"
+                method="post"
+                novalidate
+                autocomplete="off"
+                id="loginForm">
+                @csrf
+                <div class="{{ $errors->has('email') ? 'error-separator' : 'separator' }}">
                     <input
-                        id="nickname"
-                        name="nickname"
+                        id="email"
+                        name="email"
                         class="login-form-input"
-                        type="text"
-                        placeholder="Nickname" required>
-                </p>
-                <div class="separator password-block">
-                    <input id="password" class="password" required type="password" placeholder="Password" minlength="3">
+                        type="email"
+                        placeholder="Email"
+                        required
+                        value="{{old('email')}}"/>
+                    @error('email')
+                    <div class="login-form-error">
+                        <i data-feather="alert-circle" class="alert"></i>
+                    </div>
+                    @enderror
+                </div>
+                @error('email')
+                <div class="error-text">
+                    <span>{{ $message }}</span>
+                </div>
+                @enderror
+                <div class="{{ $errors->has('password') ? 'error-separator' : 'separator' }} password-block">
+                    <input
+                        id="password"
+                        name="password"
+                        class="password"
+                        required type="password"
+                        placeholder="Password"
+                        minlength="8"
+                        value="{{old('password')}}">
                     <div class="eye">
                         <i data-feather="eye" class="icon"></i>
                     </div>
                 </div>
+                @error('password')
+                <div class="error-text">
+                    <span>{{ $message }}</span>
+                </div>
+                @enderror
                 <p class="separator">
                     <button class="submit-btn" type="submit" id="submit">
                         Continue

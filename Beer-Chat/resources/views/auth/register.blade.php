@@ -17,15 +17,23 @@
     <div class="login-sign">
         <h1 class="login-title">Create Account🍻</h1>
         <div class="login-body">
-            <form class="login-form" action="{{ route('register') }}" novalidate method="post" autocomplete="off">
+            <form
+                class="login-form"
+                action="{{ route('register') }}"
+                novalidate
+                method="post"
+                autocomplete="off"
+                id="registerForm">
                 @csrf
                 <div class="{{ $errors->has('email') ? 'error-separator' : 'separator' }} required">
                     <input
                         id="email"
                         name="email"
-                        class="{{ $errors->has('email') ? 'login-form-input-error' : 'login-form-input' }}"
+                        class="login-form-input"
                         type="email"
-                        placeholder="Email" required/>
+                        placeholder="Email"
+                        required
+                        value="{{old('email')}}"/>
                     @error('email')
                     <div class="login-form-error">
                         <i data-feather="alert-circle" class="alert"></i>
@@ -37,38 +45,69 @@
                     <span>{{ $message }}</span>
                 </div>
                 @enderror
-                <p class="separator required">
+                <div class="{{ $errors->has('name') ? 'error-separator' : 'separator' }} required">
                     <input
-                        id="nickname"
-                        name="nickname"
+                        id="name"
+                        name="name"
                         class="login-form-input"
                         type="text"
-                        placeholder="Nickname" required />
-                </p>
-                <p class="separator">
+                        placeholder="Name"
+                        required
+                        value="{{old('name')}}"/>
+                    @error('name')
+                    <div class="login-form-error">
+                        <i data-feather="alert-circle" class="alert"></i>
+                    </div>
+                    @enderror
+                </div>
+                @error('name')
+                <div class="error-text">
+                    <span>{{ $message }}</span>
+                </div>
+                @enderror
+                <div class="{{ $errors->has('username') ? 'error-separator' : 'separator' }}">
                     <input
                         id="username"
                         name="username"
                         class="login-form-input"
                         type="text"
-                        placeholder="Username">
-                </p>
-                <div class="separator password-block required">
+                        placeholder="Username"
+                        value="{{old('username')}}" />
+                    @error('username')
+                    <div class="login-form-error">
+                        <i data-feather="alert-circle" class="alert"></i>
+                    </div>
+                    @enderror
+                </div>
+                @error('username')
+                <div class="error-text">
+                    <span>{{ $message }}</span>
+                </div>
+                @enderror
+                <div class="{{ $errors->has('password') ? 'error-separator' : 'separator' }} password-block required">
                     <input
                         id="password"
                         name="password"
                         class="password"
                         required type="password"
                         placeholder="Password"
-                        minlength="8">
+                        minlength="8"
+                        value="{{old('password')}}">
                     <div class="eye">
                         <i data-feather="eye" class="icon"></i>
                     </div>
                 </div>
+                @error('password')
+                @if ($message !== "The password confirmation does not match.")
+                    <div class="error-text">
+                        <span>{{ $message }}</span>
+                    </div>
+                @endif
+                @enderror
                 <div class="password-block separator required">
                     <input
-                        id="password2"
-                        name="password2"
+                        id="password_confirmation"
+                        name="password_confirmation"
                         class="password"
                         required type="password"
                         placeholder="confirm password"
@@ -77,6 +116,13 @@
                         <i data-feather="eye" class="icon"></i>
                     </div>
                 </div>
+                @error('password')
+                @if ($message === "The password confirmation does not match.")
+                    <div class="error-text">
+                        <span>{{ $message }}</span>
+                    </div>
+                @endif
+                @enderror
                 <p class="separator">
                     <button class="submit-btn" type="submit" id="submit">
                         Continue
@@ -95,5 +141,10 @@
 </div>
 <script src="{{ asset("js/app.js") }}"></script>
 <script src="{{ asset("js/authentication.js") }}"></script>
+<script>
+    const stopRefreshPage = (e) => {
+        e.preventDefault()
+    }
+</script>
 </body>
 </html>

@@ -18,14 +18,14 @@ class RegisterController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'nickname' => ['required','string'],
+            'name' => ['required','string','unique:users','min:3'],
             'email' => ['required','string','email','unique:users'],
             'password'=>['required','confirmed','min:8'],
             'username'=>['string']
         ]);
 
         $user = User::create([
-            'name' => $request->nickname,
+            'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -33,6 +33,6 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::MESSENGER);
+        return redirect()->route('messenger');
     }
 }

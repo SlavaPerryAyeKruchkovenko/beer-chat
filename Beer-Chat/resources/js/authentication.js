@@ -12,6 +12,9 @@ const authenticationVM = {
             return false;
         }
         return true;
+    },
+    stopRefreshPage: (e) => {
+        e.preventDefault()
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
