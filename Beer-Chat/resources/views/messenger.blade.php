@@ -7,6 +7,10 @@
     <title>BEER CHAT</title>
 </head>
 <body>
-Beer-chat
+<form method="post" action="{{route('logout')}}">
+    @csrf
+    <button type="submit">log out</button>
+</form>
+
 </body>
 </html>

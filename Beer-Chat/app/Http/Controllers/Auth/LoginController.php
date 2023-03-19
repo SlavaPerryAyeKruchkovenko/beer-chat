@@ -31,4 +31,9 @@ class LoginController extends Controller
 
         return redirect()->intended(RouteServiceProvider::MESSENGER);
     }
+
+    public function destroy(Request $request){
+        Auth::logout();
+        return redirect(RouteServiceProvider::HOME);
+    }
 }
