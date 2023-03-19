@@ -2545,8 +2545,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
   });
-  /*const form = document.getElementById("registerForm");
-  form.addEventListener('submit', authenticationVM.stopRefreshPage);*/
 });
 
 /***/ }),

@@ -1,0 +1,128 @@
+body
+    width: 100vw
+    background: whitesmoke
+    max-height: 100vh
+    height: 100vh
+    font-family: "Ubuntu", sans-serif
+
+.main-header
+    background: rgb(230, 230, 230)
+    width: 100%
+    box-shadow: 0 8px 8px -6px rgb(50 50 50 / 20%)
+    -o-box-shadow: 0 8px 8px -6px rgb(50 50 50 / 20%)
+    -moz-box-shadow: 0 8px 8px -6px rgb(50 50 50 / 20%)
+    -webkit-box-shadow: 0 8px 8px -6px rgb(50 50 50 / 20%)
+
+    .nav-bar
+        box-sizing: border-box
+        width: 100%
+        justify-content: space-between
+        display: inline-flex
+        align-items: center
+        padding: 0 36px
+        flex-wrap: wrap
+
+        @media only screen and (max-width: 520px)
+            justify-content: center
+
+    .nav-bar-title
+        display: flex
+        align-items: center
+        img
+            height: 54px
+            line-height: 54px
+
+        .nav-bar-title-text
+            font-weight: 700
+            font-size: 36px
+            line-height: 36px
+            margin-left: 12px
+
+    .auth
+        display: flex
+        align-items: center
+        max-width: 100%
+        justify-content: end
+
+        @media only screen and (max-width: 520px)
+            width: 100%
+
+        @media only screen and (max-width: 320px)
+            justify-content: space-between
+
+    .auth li
+        font-size: 24px
+        line-height: 24px
+        padding: 4px 6px
+        box-sizing: border-box
+        cursor: pointer
+
+    .auth li:not(:first-child)
+        margin-left: 12px
+
+    .auth li a
+        text-decoration: none
+        color: black
+        font-weight: 500
+
+.main
+    max-height: 100%
+.main-body
+    box-sizing: border-box
+    height: 100%
+    padding: 36px 72px
+
+    .main-content
+        width: 100%
+        display: flex
+        align-items: start
+        justify-content: space-between
+        flex-wrap: wrap
+        .example
+            width: 50%
+            max-width: 50%
+
+    .main-content-text
+        max-width: 40%
+        display: flex
+        flex-direction: column
+
+        h1
+            font-size: 48px
+            line-height: 1.5em
+            font-weight: 700
+        h2
+            font-size: 32px
+            line-height: 1.5em
+            font-weight: 500
+        .sub-title
+            color: dimgray
+            margin-top: 18px
+
+.another-information
+    padding: 32px 0
+    align-items: center
+    text-align: center
+    width: 100%
+    font-size: 32px
+    margin-top: 18px
+    box-sizing: border-box
+
+    .gray
+        color: dimgray
+
+    .another-information-button
+        background: transparent
+        padding: 12px 16px
+        font-size: 24px
+        border-radius: 12px
+        font-family: "Ubuntu", sans-serif
+        font-weight: 500
+        cursor: pointer
+        box-sizing: border-box
+        color: black
+        text-decoration: none
+
+.red-border
+    border: 2px solid red
+    border-radius: 8px

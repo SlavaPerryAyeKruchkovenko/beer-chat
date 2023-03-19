@@ -63,6 +63,12 @@
                     <span>{{ $message }}</span>
                 </div>
                 @enderror
+                <div class="separator">
+                    <div class="remember-block">
+                        <input type="checkbox" id="remember" name="remember" class="custom-checkbox"/>
+                        <label for="remember">Remember me</label>
+                    </div>
+                </div>
                 <p class="separator">
                     <button class="submit-btn" type="submit" id="submit">
                         Continue
