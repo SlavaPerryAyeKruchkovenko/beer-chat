@@ -4,6 +4,13 @@ body {
   max-height: 100vh;
   height: 100vh;
   font-family: "Ubuntu", sans-serif;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 768px) {
+  body {
+    overflow: auto;
+  }
 }
 
 .main-header {
@@ -103,15 +110,42 @@ body {
   flex-wrap: wrap;
 }
 
+@media only screen and (max-width: 768px) {
+  .main-body .main-content {
+    display: block;
+  }
+}
+
 .main-body .main-content .example {
-  width: 50%;
-  max-width: 50%;
+  width: 40%;
+  max-width: 40%;
+}
+
+@media only screen and (max-width: 1024px) {
+  .main-body .main-content .example {
+    width: 50%;
+    max-width: 50%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .main-body .main-content .example {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 .main-body .main-content-text {
   max-width: 40%;
   display: flex;
   flex-direction: column;
+}
+
+@media only screen and (max-width: 768px) {
+  .main-body .main-content-text {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 .main-body .main-content-text h1 {

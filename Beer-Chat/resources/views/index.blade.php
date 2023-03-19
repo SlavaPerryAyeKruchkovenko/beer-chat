@@ -18,9 +18,15 @@
                     <img src="{{ asset("images/cheers.png") }}" alt="beer"/>
                     <h1 class="nav-bar-title-text">Beer Chat</h1>
                 </div>
+
                 <ul class="auth">
-                    <li class="pa2 mr3 pointer"><a href="{{ route('login') }}">Sign In</a></li>
+                    @guest
+                    <li class=""><a href="{{ route('login') }}">Sign In</a></li>
                     <li class="red-border"><a href="{{ route('register') }}">Sign Up</a></li>
+                    @endguest
+                    @auth
+                    <li><a href="{{ route('messenger') }}">Messenger</a></li>
+                    @endauth
                 </ul>
             </nav>
         </header>
