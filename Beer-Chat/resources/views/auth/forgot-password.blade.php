@@ -9,17 +9,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap" rel="stylesheet">
-    <title>Login</title>
+    <title>Forgot Password</title>
 
 </head>
 <body>
 <div class="login">
     <div class="login-sign">
-        <h1 class="login-title">Login🍺</h1>
+        <h1 class="login-title">Change password🥃</h1>
         <div class="login-body">
             <form
                 class="login-form"
-                action="{{ route('login') }}"
+                action="{{ route('forgot-password') }}"
                 method="post"
                 novalidate
                 autocomplete="off"
@@ -45,33 +45,9 @@
                     <span>{{ $message }}</span>
                 </div>
                 @enderror
-                <div class="{{ $errors->has('password') ? 'error-separator' : 'separator' }} password-block">
-                    <input
-                        id="password"
-                        name="password"
-                        class="password"
-                        required type="password"
-                        placeholder="Password"
-                        minlength="8"
-                        value="{{old('password')}}">
-                    <div class="eye">
-                        <i data-feather="eye" class="icon"></i>
-                    </div>
-                </div>
-                @error('password')
-                <div class="error-text">
-                    <span>{{ $message }}</span>
-                </div>
-                @enderror
-                <div class="separator">
-                    <div class="remember-block">
-                        <input type="checkbox" id="remember" name="remember" class="custom-checkbox"/>
-                        <label for="remember">Remember me</label>
-                    </div>
-                </div>
                 <p class="separator">
                     <button class="submit-btn" type="submit" id="submit">
-                        Continue
+                        Send Reset Link
                         <i data-feather="log-in" class="log-in icon"></i>
                     </button>
                 </p>
@@ -81,8 +57,8 @@
                     <i data-feather="arrow-left" class="icon"></i>
                     <span>Create account</span>
                 </a>
-                <a class="back-link link right" href="{{route('forgot-password')}}">
-                    <span>Forgot password?</span>
+                <a class="back-link link left" href="{{route('login')}}">
+                    <span>Already have account?</span>
                     <i data-feather="arrow-right" class="icon"></i>
                 </a>
             </div>

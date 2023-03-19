@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -15,8 +16,8 @@ Route::post('logout', [LoginController::class, 'destroy'])-> middleware('auth')-
 Route::get('/register', [RegisterController::class, 'create']) -> middleware('guest') -> name('register');
 Route::post('/register',[RegisterController::class, 'store']) -> middleware('guest');
 
-Route::get('/forgot-password', [ForgotPassword::class, 'create']) -> middleware('guest') -> name('forgot-password');
-Route::post('/forgot-password', [ForgotPassword::class, 'change']) -> middleware('guest');
+Route::get('/forgot-password', [ForgotPasswordController::class, 'create']) -> middleware('guest') -> name('forgot-password');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'store']) -> middleware('guest');
 
 Route::get(RouteServiceProvider::MESSENGER,function () {
     return view('messenger');
