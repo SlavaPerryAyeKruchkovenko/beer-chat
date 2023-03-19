@@ -25,7 +25,7 @@
                 autocomplete="off"
                 id="loginForm">
                 @csrf
-                <input type="hidden" name="token" value="{{ $request->token }}">
+                <input type="hidden" id="token" name="token" value="{{ $token }}">
                 <div class="{{ $errors->has('email') ? 'error-separator' : 'separator' }}">
                     <input
                         id="email"
@@ -35,7 +35,7 @@
                         placeholder="Email"
                         required
                         readonly
-                        value="{{old('email', $request->email)}}"/>
+                        value="{{old('email', $email)}}"/>
                     @error('email')
                     <div class="login-form-error">
                         <i data-feather="alert-circle" class="alert"></i>

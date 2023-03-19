@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'log'),
 
     /*
     |--------------------------------------------------------------------------
@@ -43,8 +43,8 @@ return [
                 "name" => "John Doe"
             ),
             "encryption" => "tls",
-            "username" => "a3b31e3d-fd31-4b73-9061-ad4da3d594f6",
-            "password" => "11265b85-02e9-43dc-b892-1f37a6548dc5",
+            "username" => "5b49cbb3-ab4f-4230-851b-4a924099e3fd",
+            "password" => "8cc4d701-ae27-495b-9009-8cd7b8630e93",
             "sendmail" => "/usr/sbin/sendmail -bs",
             "pretend" => false,
             'timeout' => null,

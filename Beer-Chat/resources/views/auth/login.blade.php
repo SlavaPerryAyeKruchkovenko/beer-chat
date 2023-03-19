@@ -17,6 +17,15 @@
     <div class="login-sign">
         <h1 class="login-title">Login🍺</h1>
         <div class="login-body">
+            @if(session('status'))
+                <div class="notification">
+                    <div class="notification-block" role="alert" id="success-alert">
+                        <i data-feather="check-circle" class="icon"></i>
+                        <p class="text">{{session('status')}}</p>
+                        <i data-feather="x" class="icon close" id="close-alert"></i>
+                    </div>
+                </div>
+            @endif
             <form
                 class="login-form"
                 action="{{ route('login') }}"

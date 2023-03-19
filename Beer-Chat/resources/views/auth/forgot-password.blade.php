@@ -21,7 +21,7 @@
                 <div class="notification">
                     <div class="notification-block" role="alert" id="success-alert">
                         <i data-feather="check-circle" class="icon"></i>
-                        <p class="text">We have emailed your password reset link.</p>
+                        <p class="text">{{session('status')}}</p>
                         <i data-feather="x" class="icon close" id="close-alert"></i>
                     </div>
                 </div>
