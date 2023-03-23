@@ -15,5 +15,6 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/authentication.js', 'public/js')
     .sass('resources/sass/app.sass', 'public/css')
     .sass('resources/sass/main.sass', 'public/css')
+    .sass('resources/sass/messenger.sass', 'public/css')
     .postCss('resources/sass/authentication.css', 'public/css')
     .postCss('resources/css/reset200802.css', 'public/css');
