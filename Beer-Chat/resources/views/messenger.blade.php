@@ -47,7 +47,12 @@
                 <div class="messenger-content">
 
                 </div>
-                <form class="messenger-input">
+                <form
+                    class="messenger-input"
+                    method="post"
+                    action="{{route('message.send')}}"
+                    autocomplete="off"
+                    id="messageForm">
                     @csrf
                     <div class="messenger-input-block">
                         <input class="text-input" type="text" placeholder="write a message..." id="message">

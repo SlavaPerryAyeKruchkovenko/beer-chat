@@ -2,6 +2,8 @@
 
     namespace App\Events;
 
+    use App\Models\Message;
+    use App\Models\User;
     use Illuminate\Broadcasting\Channel;
     use Illuminate\Broadcasting\InteractsWithSockets;
     use Illuminate\Broadcasting\PresenceChannel;
@@ -16,14 +18,19 @@
         use InteractsWithSockets;
         use SerializesModels;
 
+        private $user;
+        private $message;
+
         /**
          * Create a new event instance.
          *
-         * @return void
+         * @param User $user
+         * @param Message $message
          */
-        public function __construct()
+        public function __construct(User $user, Message $message)
         {
-            //
+            $this->user = $user;
+            $this->message = $message;
         }
 
         /**

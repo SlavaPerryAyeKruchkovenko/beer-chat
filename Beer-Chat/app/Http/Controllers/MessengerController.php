@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class MessengerController extends Controller
 {
-    public function create(){
+    public function create()
+    {
         $user = auth()->user();
         $url = "https://www.gravatar.com/avatar/" . md5($user->email) .
             "?d=https://ui-avatars.com/api/" .
