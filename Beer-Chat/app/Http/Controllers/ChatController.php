@@ -31,10 +31,10 @@
                     "text" => $request->message,
                     "chat_id" => 0,
                     "user_id" => Auth::id(),
-                    "message_date" => Carbon::now()
                 ]
             );
 
             broadcast(new MessageSend($request->user(), $message));
+            return $message;
         }
     }

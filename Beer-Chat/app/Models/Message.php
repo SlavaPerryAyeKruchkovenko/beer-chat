@@ -7,15 +7,14 @@
 
     class Message extends Model
     {
+        protected $primaryKey = 'id';
+
+        protected $table = 'messages';
+
         protected $fillable = [
-            "message_date",
             "text",
             "chat_id",
             "user_id"
-        ];
-
-        protected $casts = [
-            'message_date' => 'datetime',
         ];
 
         public function users(): BelongsTo

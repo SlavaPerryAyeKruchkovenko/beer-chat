@@ -55,7 +55,12 @@
                     id="messageForm">
                     @csrf
                     <div class="messenger-input-block">
-                        <input class="text-input" type="text" placeholder="write a message..." id="message">
+                        <input
+                            class="text-input"
+                            type="text"
+                            placeholder="write a message..."
+                            id="message" minlength="1"
+                            name="message">
                         <button type="submit" class="messange-btn">Отправить</button>
                     </div>
                 </form >
