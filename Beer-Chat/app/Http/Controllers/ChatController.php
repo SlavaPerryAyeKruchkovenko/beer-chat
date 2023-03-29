@@ -29,11 +29,10 @@
             $message = Message::create(
                 [
                     "text" => $request->message,
-                    "chat_id" => 0,
+                    "chat_id" => 1,
                     "user_id" => Auth::id(),
                 ]
             );
-
             broadcast(new MessageSend($request->user(), $message));
             return $message;
         }

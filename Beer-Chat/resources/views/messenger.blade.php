@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ asset("css/reset200802.css") }}">
     <link rel="stylesheet" href="{{ asset("css/messenger.css") }}"/>
     <link rel="stylesheet" href="{{ asset("css/app.css") }}"/>
+    <script src="{{ asset("js/bootstrap.js") }}"></script>
     <title>BEER CHAT</title>
 </head>
 <body class="messenger-body">
@@ -50,8 +51,6 @@
                 <form
                     class="messenger-input"
                     method="post"
-                    action="{{route('message.send')}}"
-                    autocomplete="off"
                     id="messageForm">
                     @csrf
                     <div class="messenger-input-block">
@@ -61,7 +60,7 @@
                             placeholder="write a message..."
                             id="message" minlength="1"
                             name="message">
-                        <button type="submit" class="messange-btn">Отправить</button>
+                        <button type="button" class="messange-btn" id="messageSender">Отправить</button>
                     </div>
                 </form >
             </section>
@@ -69,5 +68,6 @@
     </ul>
 
 <script src="{{ asset("js/app.js") }}"></script>
+<script src="{{ asset("js/messenger.js") }}"></script>
 </body>
 </html>
