@@ -141,10 +141,5 @@
 </div>
 <script src="{{ asset("js/app.js") }}"></script>
 <script src="{{ asset("js/authentication.js") }}"></script>
-<script>
-    const stopRefreshPage = (e) => {
-        e.preventDefault()
-    }
-</script>
 </body>
 </html>

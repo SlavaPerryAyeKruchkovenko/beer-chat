@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\MessengerController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
@@ -20,9 +21,10 @@ Route::post('/register',[RegisterController::class, 'store']) -> middleware('gue
 Route::get('/forgot-password', [ForgotPasswordController::class, 'create']) -> middleware('guest') -> name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'store']) -> middleware('guest') -> name('password.email');;
 
-Route::get('/reset-password', [ResetPasswordController::class, 'create']) -> middleware('guest') -> name('password.reset');
-Route::post('/reset-password', [ResetPasswordController::class, 'store']) -> middleware('guest') -> name('password.update');
+Route::get('/reset-password', [ResetPasswordController::class, 'create']) ->
+middleware('guest') -> name('password.reset');
+Route::post('/reset-password', [ResetPasswordController::class, 'store']) ->
+middleware('guest') -> name('password.update');
 
-Route::get(RouteServiceProvider::MESSENGER,function () {
-    return view('messenger');
-})->middleware('auth')->name('messenger');
+Route::get(RouteServiceProvider::MESSENGER,[MessengerController::class,'create'])->
+middleware('auth')->name('messenger');
