@@ -2116,21 +2116,38 @@ var apiManager = {
     return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/messages/" + chatId);
   }
 };
+var messengerVM = {
+  messageBlock: document.getElementById("messages"),
+  sendMessage: function sendMessage(input) {
+    var text = input.value;
+    apiManager.sendMessage(text).then(function (data) {
+      messengerVM.appendMessage(data);
+    })["catch"](function (e) {
+      console.log(e);
+    });
+    input.value = "";
+    return false;
+  },
+  appendMessage: function appendMessage(data) {
+    var messenger = messengerVM.messageBlock;
+  },
+  getMessageView: function getMessageView(text) {}
+};
 document.addEventListener("DOMContentLoaded", function () {
   Echo["private"]('chat').listen('MessageSend', function (e) {
     console.log(e);
   });
-  var messageSender = document.getElementById("messageForm");
-  messageSender.onclick = function (e) {
+  var sender = document.getElementById("messageSender");
+  var message = document.getElementById("message");
+  sender.addEventListener("click", function () {
+    return messengerVM.sendMessage(message);
+  });
+  message.addEventListener("keyup", function (e) {
     e.preventDefault();
-    var messageInput = document.getElementById("message");
-    apiManager.sendMessage(messageInput.value).then(function (data) {
-      console.log(data);
-    })["catch"](function (e) {
-      console.log(e);
-    });
-    return false;
-  };
+    if (e.key === 'Enter') {
+      sender.click();
+    }
+  });
 });
 
 /***/ }),

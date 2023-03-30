@@ -41,6 +41,8 @@
   font-size: 24px;
 }
 .messenger .messenger-content {
+  box-sizing: border-box;
+  max-height: calc(100% - 132px);
   flex: 1 0 auto;
 }
 .messenger .messenger-input {
@@ -134,11 +136,6 @@
   max-width: 100%;
   align-items: center;
 }
-.user-column .user-image {
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-}
 .user-column .user-username {
   margin-left: 18px;
   font-size: 24px;
@@ -180,6 +177,63 @@
 .logout .logout-icon {
   position: absolute;
   right: 1.5%;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.messages .message-block {
+  display: flex;
+  align-items: end;
+}
+.messages .message {
+  box-sizing: border-box;
+  width: 400px;
+  max-width: 90%;
+  padding: 8px;
+  background: whitesmoke;
+  border-radius: 8px;
+  border: 1px solid black;
+}
+.messages .message .message-text {
+  font-family: Ubuntu, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+}
+.messages .left-message {
+  float: left;
+}
+.messages .left-message .message {
+  margin-left: 4px;
+}
+.messages .right-message {
+  float: right;
+  flex-direction: row-reverse;
+}
+.messages .right-message .message {
+  margin-right: 4px;
+}
+
+.messages .message-block:not(:first-child) {
+  margin-top: 4px;
+}
+
+.user-image {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+
+.low-user-image {
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
 }
 
 /*# sourceMappingURL=messenger.css.map */

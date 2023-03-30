@@ -2,12 +2,32 @@ import axios from "axios"
 
 const apiManager = {
     sendMessage: (text) => {
-        return axios.post("/message",{
-            message:text
+        return axios.post("/message", {
+            message: text
         });
     },
     getAllMessages: (chatId) => {
-        return axios.get("/messages/"+chatId);
+        return axios.get("/messages/" + chatId);
+    }
+}
+const messengerVM = {
+    messageBlock: document.getElementById("messages"),
+    sendMessage: (input) => {
+        const text = input.value
+        apiManager.sendMessage(text).then(data => {
+            messengerVM.appendMessage(data)
+        }).catch(e => {
+            console.log(e);
+        });
+        input.value = "";
+        return false;
+    },
+    appendMessage: (data) => {
+        const messenger = messengerVM.messageBlock;
+
+    },
+    getMessageView: (text) => {
+
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,16 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
         .listen('MessageSend', (e) => {
             console.log(e)
         });
+    const sender = document.getElementById("messageSender");
+    const message = document.getElementById("message");
+    sender.addEventListener("click",() => messengerVM.sendMessage(message));
 
-    const messageSender = document.getElementById("messageForm");
-    messageSender.onclick = (e) => {
-        e.preventDefault()
-        const messageInput = document.getElementById("message");
-        apiManager.sendMessage(messageInput.value).then(data=>{
-            console.log(data)
-        }).catch(e=>{
-            console.log(e)
-        });
-        return false;
-    }
+    message.addEventListener("keyup", (e) => {
+        e.preventDefault();
+        if (e.key === 'Enter') {
+            sender.click()
+        }
+    });
 })

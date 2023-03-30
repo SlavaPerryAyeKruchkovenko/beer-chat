@@ -13,9 +13,6 @@ const authenticationVM = {
         }
         return true;
     },
-    stopRefreshPage: (e) => {
-        e.preventDefault()
-    },
     deleteAlert: ()=>{
         const alert = document.getElementById('success-alert')
         alert.parentNode.parentNode.removeChild(alert.parentNode);

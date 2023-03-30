@@ -2524,9 +2524,6 @@ var authenticationVM = {
     }
     return true;
   },
-  stopRefreshPage: function stopRefreshPage(e) {
-    e.preventDefault();
-  },
   deleteAlert: function deleteAlert() {
     var alert = document.getElementById('success-alert');
     alert.parentNode.parentNode.removeChild(alert.parentNode);

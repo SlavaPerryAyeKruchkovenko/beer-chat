@@ -28,7 +28,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
     );
     Route::post('/forgot-password', [ForgotPasswordController::class, 'store'])->middleware('guest')->name(
         'password.email'
-    );;
+    );
 
     Route::get('/reset-password', [ResetPasswordController::class, 'create'])->
     middleware('guest')->name('password.reset');
@@ -38,8 +38,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
     Route::get(RouteServiceProvider::MESSENGER, [MessengerController::class, 'create'])->
     middleware('auth')->name('messenger');
 
-    Route::get("/messages", [ChatController::class, 'messages'])->
-    middleware('auth')->name('messages');
+    Route::get("/messages/{chat_id}", [ChatController::class, 'messages'])->
+    middleware('auth')->name('chat.messages');
 
     Route::post("/message", [ChatController::class, 'store'])->
     middleware('auth')->name('message.send');
