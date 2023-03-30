@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
     use App\Http\Controllers\ChatController;
     use App\Http\Controllers\MessengerController;
+    use App\Http\Controllers\UserController;
     use App\Providers\RouteServiceProvider;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Auth\RegisterController;
@@ -29,9 +30,12 @@ use App\Http\Controllers\Auth\ResetPasswordController;
     Route::post('/forgot-password', [ForgotPasswordController::class, 'store'])->middleware('guest')->name(
         'password.email'
     );
+    Route::get('/user/{id}', [UserController::class, 'user'])->whereNumber('id')->
+    middleware('auth')->name('user');
 
     Route::get('/reset-password', [ResetPasswordController::class, 'create'])->
     middleware('guest')->name('password.reset');
+
     Route::post('/reset-password', [ResetPasswordController::class, 'store'])->
     middleware('guest')->name('password.update');
 

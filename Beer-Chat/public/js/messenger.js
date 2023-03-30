@@ -2114,6 +2114,9 @@ var apiManager = {
   },
   getAllMessages: function getAllMessages(chatId) {
     return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/messages/" + chatId);
+  },
+  getUserById: function getUserById(userId) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/user/" + userId);
   }
 };
 var messengerVM = {
@@ -2128,10 +2131,31 @@ var messengerVM = {
     input.value = "";
     return false;
   },
-  appendMessage: function appendMessage(data) {
+  appendMessage: function appendMessage(message) {
     var messenger = messengerVM.messageBlock;
+    if (message.data) {
+      apiManager.getUserById(message.data.user_id).then(function (user) {
+        messenger.appendChild(messengerVM.getMessageView(message.data, user.data, true));
+        messenger.scrollTo(0, messenger.scrollHeight);
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    }
   },
-  getMessageView: function getMessageView(text) {}
+  getMessageView: function getMessageView(message, user, isLeft) {
+    var elem = document.createElement('li');
+    elem.innerHTML = "<img class=\"low-user-image\" src=\"".concat(messengerVM.getUserAvatar(user), "\" alt=\"profile\">\n            <div class=\"message\">\n                <span class=\"message-text\">").concat(message.text, "</span>\n            </div>");
+    elem.classList.add("message-block");
+    if (isLeft) {
+      elem.classList.add("left-message");
+    } else {
+      elem.classList.add("right-message");
+    }
+    return elem;
+  },
+  getUserAvatar: function getUserAvatar(user) {
+    return "https://www.gravatar.com/avatar/md5".concat(user.email, "?d=https://ui-avatars.com/api/").concat(user.username, "/128/random");
+  }
 };
 document.addEventListener("DOMContentLoaded", function () {
   Echo["private"]('chat').listen('MessageSend', function (e) {

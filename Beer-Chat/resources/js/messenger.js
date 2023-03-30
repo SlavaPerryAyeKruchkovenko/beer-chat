@@ -8,6 +8,9 @@ const apiManager = {
     },
     getAllMessages: (chatId) => {
         return axios.get("/messages/" + chatId);
+    },
+    getUserById: (userId) => {
+        return axios.get("/user/" + userId);
     }
 }
 const messengerVM = {
@@ -22,12 +25,34 @@ const messengerVM = {
         input.value = "";
         return false;
     },
-    appendMessage: (data) => {
+    appendMessage: (message) => {
         const messenger = messengerVM.messageBlock;
-
+        if(message.data){
+            apiManager.getUserById(message.data.user_id).then(user=>{
+                messenger.appendChild(messengerVM.getMessageView(message.data,user.data,true));
+                messenger.scrollTo(0, messenger.scrollHeight);
+            }).catch(e=>{
+                console.log(e);
+            });
+        }
     },
-    getMessageView: (text) => {
-
+    getMessageView: (message,user,isLeft) => {
+        const elem = document.createElement('li');
+        elem.innerHTML = `<img class="low-user-image" src="${messengerVM.getUserAvatar(user)}" alt="profile">
+            <div class="message">
+                <span class="message-text">${message.text}</span>
+            </div>`;
+        elem.classList.add("message-block");
+        if(isLeft){
+            elem.classList.add("left-message");
+        }
+        else{
+            elem.classList.add("right-message");
+        }
+        return elem;
+    },
+    getUserAvatar: (user) => {
+        return `https://www.gravatar.com/avatar/md5${user.email}?d=https://ui-avatars.com/api/${user.username}/128/random`;
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
