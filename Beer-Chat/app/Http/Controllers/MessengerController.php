@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+
 class MessengerController extends Controller
 {
-    public function create()
+    public function create(): Factory|View|Application
     {
         $user = auth()->user();
         $url = "https://www.gravatar.com/avatar/" . md5($user->email) .

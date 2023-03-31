@@ -45,6 +45,9 @@ use App\Http\Controllers\Auth\ResetPasswordController;
     Route::get("/messages/{chat_id}", [ChatController::class, 'messages'])->
     middleware('auth')->name('chat.messages');
 
+    Route::delete("/message/{message_id}", [ChatController::class, 'delete'])->
+    middleware('auth')->name('chat.messages');
+
     Route::post("/message", [ChatController::class, 'store'])->
     middleware('auth')->name('message.send');
 

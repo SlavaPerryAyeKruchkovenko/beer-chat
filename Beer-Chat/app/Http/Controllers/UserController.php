@@ -6,8 +6,8 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function user(string $id)
+    public function user(string $id): User
     {
-        return User::where('id',$id)->first();
+        return User::where('id', $id)->first();
     }
 }

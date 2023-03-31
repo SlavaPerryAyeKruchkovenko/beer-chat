@@ -50,6 +50,12 @@
                 </div>
                 <div class="messenger-content">
                     <ul class="messages" id="messages">
+                        {{--<li class="left-message message-block">
+                            <img class="low-user-image" src="{{$url}}" alt="profile">
+                            <div class="message">
+                                <span class="message-text">${message.text}</span>
+                            </div>
+                        </li>--}}
                     </ul>
                 </div>
                 <div
@@ -64,7 +70,7 @@
                             minlength="1"
                             maxlength="255"
                             name="message">
-                        <button type="button" class="messange-btn" id="messageSender">Отправить</button>
+                        <button type="button" class="message-btn" id="messageSender">Отправить</button>
                     </div>
                 </div >
             </section>
