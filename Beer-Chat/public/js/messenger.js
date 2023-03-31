@@ -2174,20 +2174,16 @@ var messengerVM = {
   messageBlock: document.getElementById("messages"),
   sendMessage: function sendMessage(input) {
     var text = input.value;
-    apiManager.sendMessage(text).then(function (data) {
-      if (data.data) {
-        messengerVM.appendMessage(data.data);
-      }
-    })["catch"](function (e) {
+    apiManager.sendMessage(text)["catch"](function (e) {
       console.log(e);
     });
     input.value = "";
     return false;
   },
-  appendMessage: function appendMessage(message) {
+  appendMessage: function appendMessage(message, user) {
     var messenger = messengerVM.messageBlock;
-    if (message && message.user) {
-      messenger.appendChild(messengerVM.getMessageView(message, message.user, message.user_id === messengerVM.currentUser));
+    if (message && user) {
+      messenger.appendChild(messengerVM.getMessageView(message, user, message.user_id === messengerVM.currentUser));
       messenger.scrollTo(0, messenger.scrollHeight);
     }
   },
@@ -2207,13 +2203,13 @@ var messengerVM = {
   },
   writeAllMessages: function writeAllMessages(messages) {
     messages.forEach(function (message) {
-      messengerVM.appendMessage(message);
+      messengerVM.appendMessage(message, message.user);
     });
   }
 };
 document.addEventListener("DOMContentLoaded", function () {
   Echo["private"]('chat').listen('MessageSend', function (e) {
-    console.log(e);
+    messengerVM.appendMessage(e.message, e.user);
   });
   var sender = document.getElementById("messageSender");
   var message = document.getElementById("message");

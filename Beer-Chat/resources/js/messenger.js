@@ -19,22 +19,18 @@ const messengerVM = {
     messageBlock: document.getElementById("messages"),
     sendMessage: (input) => {
         const text = input.value
-        apiManager.sendMessage(text).then(data => {
-            if(data.data){
-                messengerVM.appendMessage(data.data)
-            }
-        }).catch(e => {
+        apiManager.sendMessage(text).catch(e => {
             console.log(e);
         });
         input.value = "";
         return false;
     },
-    appendMessage: (message) => {
+    appendMessage: (message,user) => {
         const messenger = messengerVM.messageBlock;
-        if (message && message.user) {
+        if (message && user) {
             messenger.appendChild(messengerVM.getMessageView(
                 message,
-                message.user,
+                user,
                 message.user_id === messengerVM.currentUser));
             messenger.scrollTo(0, messenger.scrollHeight);
         }
@@ -59,14 +55,14 @@ const messengerVM = {
     },
     writeAllMessages: (messages) => {
         messages.forEach(message=>{
-            messengerVM.appendMessage(message)
+            messengerVM.appendMessage(message,message.user)
         })
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
     Echo.private('chat')
         .listen('MessageSend', (e) => {
-            console.log(e)
+            messengerVM.appendMessage(e.message,e.user)
         });
     const sender = document.getElementById("messageSender");
     const message = document.getElementById("message");
