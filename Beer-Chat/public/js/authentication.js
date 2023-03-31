@@ -2513,8 +2513,7 @@ module.exports = __webpack_require__(/*! /home/runner/work/feather/feather/src/i
 
 var feather = __webpack_require__(/*! feather-icons */ "./node_modules/feather-icons/dist/feather.js");
 var authenticationVM = {
-  changePasswordVisible: function changePasswordVisible(inputId) {
-    var passwordInput = document.getElementById(inputId);
+  changePasswordVisible: function changePasswordVisible(passwordInput) {
     if (passwordInput && passwordInput.type.toLowerCase() === "password") {
       passwordInput.type = 'text';
       return true;
@@ -2532,9 +2531,9 @@ var authenticationVM = {
 document.addEventListener("DOMContentLoaded", function () {
   var eyes = document.getElementsByClassName('eye');
   Array.from(eyes).forEach(function (eye, index) {
-    var number = index === 0 ? '' : index + 1;
-    eye.onclick = function () {
-      var isVisible = authenticationVM.changePasswordVisible("password" + number);
+    eye.addEventListener("click", function () {
+      var password = eye.parentNode.querySelector("input");
+      var isVisible = authenticationVM.changePasswordVisible(password);
       if (isVisible) {
         eye.innerHTML = feather.icons['eye-off'].toSvg({
           "class": 'eye-btn'
@@ -2544,7 +2543,7 @@ document.addEventListener("DOMContentLoaded", function () {
           "class": 'eye-btn'
         });
       }
-    };
+    }, false);
   });
   var closeBtn = document.getElementById('close-alert');
   if (closeBtn) {

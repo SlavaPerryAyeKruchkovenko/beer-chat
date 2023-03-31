@@ -32,23 +32,16 @@ return [
     |            "postmark", "log", "array"
     |
     */
-
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            "host" => "app.debugmail.io",
-            "port" => "25",
-            "from" => array(
-                "address" => "john.doe@example.org",
-                "name" => "John Doe"
-            ),
-            "encryption" => "tls",
-            "username" => "5b49cbb3-ab4f-4230-851b-4a924099e3fd",
-            "password" => "8cc4d701-ae27-495b-9009-8cd7b8630e93",
-            "sendmail" => "/usr/sbin/sendmail -bs",
-            "pretend" => false,
+            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('MAIL_USERNAME'),
+            'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
-            'auth_mode' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
 
         'ses' => [

@@ -4,17 +4,17 @@
 
     use App\Events\MessageSend;
     use App\Models\Message;
-    use Carbon\Carbon;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
 
 
     class ChatController extends Controller
     {
-        public function messages()
+        public function messages(string $chat_id)
         {
             return Message::query()
-                ->with('users')
+                ->where('chat_id', '=', $chat_id)
+                ->with('user')
                 ->get();
         }
 
@@ -33,6 +33,7 @@
                     "user_id" => Auth::id(),
                 ]
             );
+            $message->user=Auth::user();
             broadcast(new MessageSend($request->user(), $message));
             return $message;
         }

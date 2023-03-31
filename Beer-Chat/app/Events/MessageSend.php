@@ -18,8 +18,8 @@
         use InteractsWithSockets;
         use SerializesModels;
 
-        private $user;
-        private $message;
+        public $user;
+        public $message;
 
         /**
          * Create a new event instance.
@@ -36,9 +36,9 @@
         /**
          * Get the channels the event should broadcast on.
          *
-         * @return Channel|array
+         * @return Channel|PrivateChannel|array
          */
-        public function broadcastOn()
+        public function broadcastOn(): Channel|PrivateChannel|array
         {
             return new PrivateChannel('chat');
         }

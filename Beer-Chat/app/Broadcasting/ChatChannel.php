@@ -3,6 +3,7 @@
 namespace App\Broadcasting;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ChatChannel
 {
@@ -20,11 +21,11 @@ class ChatChannel
      * Authenticate the user's access to the channel.
      *
      * @param User $user
-     * @param string $id
      * @return array|bool
      */
-    public function join(User $user,string $id)
+    public function join(User $user)
     {
-        return $user->id === $id;
+        Auth::id() === $user->id;
+        return true;
     }
 }
