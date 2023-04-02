@@ -4577,6 +4577,9 @@ var apiManager = {
       message: text
     });
   },
+  getUserByName: function getUserByName(name) {
+    return axios.get("/user/" + name);
+  },
   getAllMessages: function getAllMessages(chatId) {
     return axios.get("/messages/" + chatId);
   },
@@ -4590,6 +4593,9 @@ var apiManager = {
 var messengerVM = {
   currentUser: Number(document.querySelector('meta[name="user_id"]').content),
   messageBlock: document.getElementById("messages"),
+  usersBlock: document.getElementById('users'),
+  currentChat: null,
+  userChats: [],
   sendMessage: function sendMessage(input) {
     var text = input.value;
     apiManager.sendMessage(text)["catch"](function (e) {
@@ -4667,6 +4673,52 @@ var messengerVM = {
     messages.forEach(function (message) {
       messengerVM.appendMessage(message, message.user);
     });
+  },
+  printAllMessages: function printAllMessages(chatId) {
+    apiManager.getAllMessages(chatId).then(function (data) {
+      if (data.data) {
+        messengerVM.writeAllMessages(data.data);
+      }
+    })["catch"](function (e) {
+      console.log(e);
+    });
+  },
+  getProfileView: function getProfileView(user) {
+    var profile = document.createElement('div');
+    var deleteSvg = feather.icons['trash-2'].toSvg({
+      "class": 'icon',
+      id: 'delete'
+    });
+    profile.setAttribute("id", "user".concat(user.id));
+    profile.classList.add("profile");
+    profile.innerHTML = "\n            <img class=\"min-user-image\" src=\"".concat(messengerVM.getUserAvatar(user), "\" alt=\"profile\">\n            <span class=\"profile-name\">").concat(user.name, "</span>\n            ").concat(deleteSvg);
+    return profile;
+  },
+  printProfiles: function printProfiles(users) {
+    users.forEach(function (user) {
+      var haveUser = messengerVM.userChats.find(function (x) {
+        return x.id === user.id;
+      });
+      if (!haveUser && user.id !== messengerVM.currentUser) {
+        messengerVM.userChats.push(user);
+        var profileHtml = messengerVM.getProfileView(user);
+        messengerVM.usersBlock.appendChild(profileHtml);
+      }
+    });
+    messengerVM.userChats.forEach(function (user) {
+      var haveUser = users.find(function (x) {
+        return x.id === user.id;
+      });
+      if (!haveUser) {
+        var profile = document.getElementById("user".concat(user.id));
+        if (profile) {
+          profile.remove();
+        }
+      } else {
+        users.push(user);
+      }
+    });
+    messengerVM.userChats = users;
   }
 };
 document.addEventListener("DOMContentLoaded", function () {
@@ -4676,17 +4728,20 @@ document.addEventListener("DOMContentLoaded", function () {
   Echo["private"]('chat').listen('MessageDelete', function (e) {
     messengerVM.deleteMessageView(e.message.id);
   });
+  Echo["private"]('users').listen('UserGetByName', function (e) {
+    messengerVM.printProfiles(e.users);
+  });
   var sender = document.getElementById("messageSender");
   var message = document.getElementById("message");
-  apiManager.getAllMessages(1).then(function (data) {
-    if (data.data) {
-      messengerVM.writeAllMessages(data.data);
-    }
-  })["catch"](function (e) {
-    console.log(e);
-  });
+  var searchInput = document.getElementById("search-message");
+  if (messengerVM.currentChat !== null) {
+    messengerVM.printAllMessages(messengerVM.currentChat);
+  }
   sender.addEventListener("click", function () {
     return messengerVM.sendMessage(message);
+  });
+  searchInput.addEventListener("input", function (e) {
+    apiManager.getUserByName(e.target.value);
   });
   message.addEventListener("keyup", function (e) {
     e.preventDefault();

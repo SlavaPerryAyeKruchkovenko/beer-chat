@@ -46,7 +46,10 @@
             $message = Message::where('id', $message_id)->first();
             if ($message !== null) {
                 broadcast(new MessageDelete($message));
-                return $message;
+                $res = $message->delete();
+                if ($res) {
+                    return $message;
+                }
             }
             throw ValidationException::withMessages(
                 [

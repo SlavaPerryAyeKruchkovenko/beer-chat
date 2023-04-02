@@ -7,6 +7,9 @@ const apiManager = {
             message: text
         });
     },
+    getUserByName: (name) => {
+        return axios.get("/user/" + name);
+    },
     getAllMessages: (chatId) => {
         return axios.get("/messages/" + chatId);
     },
@@ -20,6 +23,9 @@ const apiManager = {
 const messengerVM = {
     currentUser: Number(document.querySelector('meta[name="user_id"]').content),
     messageBlock: document.getElementById("messages"),
+    usersBlock: document.getElementById('users'),
+    currentChat: null,
+    userChats : [],
     sendMessage: (input) => {
         const text = input.value
         apiManager.sendMessage(text).catch(e => {
@@ -28,7 +34,7 @@ const messengerVM = {
         input.value = "";
         return false;
     },
-    appendMessage: (message,user) => {
+    appendMessage: (message, user) => {
         const messenger = messengerVM.messageBlock;
         if (message && user) {
             messenger.appendChild(messengerVM.getMessageView(
@@ -95,6 +101,49 @@ const messengerVM = {
         messages.forEach(message => {
             messengerVM.appendMessage(message, message.user);
         })
+    },
+    printAllMessages: (chatId) => {
+        apiManager.getAllMessages(chatId).then(data => {
+            if (data.data) {
+                messengerVM.writeAllMessages(data.data)
+            }
+        }).catch(e => {
+            console.log(e);
+        })
+    },
+    getProfileView:(user) => {
+        const profile = document.createElement('div');
+        const deleteSvg = feather.icons['trash-2'].toSvg({class: 'icon', id: 'delete'});
+        profile.setAttribute("id", `user${user.id}`);
+        profile.classList.add("profile");
+        profile.innerHTML = `
+            <img class="min-user-image" src="${messengerVM.getUserAvatar(user)}" alt="profile">
+            <span class="profile-name">${user.name}</span>
+            ${deleteSvg}`;
+        return profile;
+    },
+    printProfiles:(users)=>{
+        users.forEach(user=>{
+            const haveUser = messengerVM.userChats.find(x=>x.id === user.id);
+            if(!haveUser && user.id !== messengerVM.currentUser){
+                messengerVM.userChats.push(user);
+                const profileHtml = messengerVM.getProfileView(user);
+                messengerVM.usersBlock.appendChild(profileHtml);
+            }
+        })
+        messengerVM.userChats.forEach(user=>{
+            const haveUser = users.find(x=>x.id === user.id);
+            if(!haveUser){
+                const profile = document.getElementById(`user${user.id}`);
+                if(profile){
+                    profile.remove();
+                }
+            }
+            else{
+                users.push(user);
+            }
+        })
+        messengerVM.userChats = users;
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
@@ -104,20 +153,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     Echo.private('chat')
         .listen('MessageDelete', (e) => {
-            messengerVM.deleteMessageView(e.message.id)
+            messengerVM.deleteMessageView(e.message.id);
+        });
+    Echo.private('users')
+        .listen('UserGetByName', (e) => {
+            messengerVM.printProfiles(e.users);
         });
     const sender = document.getElementById("messageSender");
     const message = document.getElementById("message");
+    const searchInput = document.getElementById("search-message");
 
-    apiManager.getAllMessages(1).then(data => {
-        if (data.data) {
-            messengerVM.writeAllMessages(data.data)
-        }
-    }).catch(e => {
-        console.log(e);
-    })
+    if (messengerVM.currentChat !== null) {
+        messengerVM.printAllMessages(messengerVM.currentChat);
+    }
 
     sender.addEventListener("click", () => messengerVM.sendMessage(message));
+
+    searchInput.addEventListener("input", (e) => {
+        apiManager.getUserByName(e.target.value)
+    })
 
     message.addEventListener("keyup", (e) => {
         e.preventDefault();

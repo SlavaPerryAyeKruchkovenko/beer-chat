@@ -157,6 +157,35 @@
   flex: 1 0 auto;
   border-radius: 6px;
   box-sizing: border-box;
+  max-height: calc(100% - 188px);
+}
+.found-users .user-profiles {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border-radius: 6px;
+}
+.found-users .user-profiles .profile {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  background: #fec652;
+  padding: 8px;
+  border-radius: 6px;
+  align-items: center;
+}
+.found-users .user-profiles .profile .icon {
+  color: black;
+}
+.found-users .user-profiles .profile-name {
+  margin-left: 2px;
+  font-size: 18px;
+  font-weight: 300;
+  color: black;
+  max-height: 18px;
+  overflow-y: hidden;
 }
 
 .logout {
@@ -241,6 +270,12 @@
   border-radius: 50%;
   width: 36px;
   height: 36px;
+}
+
+.min-user-image {
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
 }
 
 .messages::-webkit-scrollbar-track {

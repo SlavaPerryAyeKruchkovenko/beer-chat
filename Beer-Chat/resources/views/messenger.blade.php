@@ -39,7 +39,9 @@
                     </div>
                 </form>
                 <div class="found-users">
+                    <ul class="user-profiles" id="users">
 
+                    </ul>
                 </div>
             </section>
         </li>

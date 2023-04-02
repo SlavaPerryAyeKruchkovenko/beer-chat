@@ -30,8 +30,12 @@ use App\Http\Controllers\Auth\ResetPasswordController;
     Route::post('/forgot-password', [ForgotPasswordController::class, 'store'])->middleware('guest')->name(
         'password.email'
     );
+
     Route::get('/user/{id}', [UserController::class, 'user'])->whereNumber('id')->
-    middleware('auth')->name('user');
+    middleware('auth')->name('user.id');
+
+    Route::get('/user/{name?}', [UserController::class, 'userByName'])->
+    middleware('auth')->name('user.name');
 
     Route::get('/reset-password', [ResetPasswordController::class, 'create'])->
     middleware('guest')->name('password.reset');
@@ -46,7 +50,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
     middleware('auth')->name('chat.messages');
 
     Route::delete("/message/{message_id}", [ChatController::class, 'delete'])->
-    middleware('auth')->name('chat.messages');
+    middleware('auth')->name('message.delete');
 
     Route::post("/message", [ChatController::class, 'store'])->
     middleware('auth')->name('message.send');
