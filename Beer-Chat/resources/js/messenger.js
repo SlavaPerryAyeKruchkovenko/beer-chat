@@ -11,13 +11,19 @@ const apiManager = {
         return axios.get("/user/" + name);
     },
     getAllMessages: (chatId) => {
-        return axios.get("/messages/" + chatId);
+        return axios.get("/chat/" + chatId);
     },
     getUserById: (userId) => {
         return axios.get("/user/" + userId);
     },
     deleteMessage: (messageId) => {
         return axios.delete(`/message/${messageId}`);
+    },
+    createChat: (firstUser,secondUser) => {
+        return axios.post(`/chat`,{
+            user_id:firstUser,
+            second_user_id: secondUser
+        });
     }
 }
 const messengerVM = {
@@ -120,6 +126,11 @@ const messengerVM = {
             <img class="min-user-image" src="${messengerVM.getUserAvatar(user)}" alt="profile">
             <span class="profile-name">${user.name}</span>
             ${deleteSvg}`;
+        profile.addEventListener("click",()=>{
+            apiManager.createChat(messengerVM.currentUser,user.id).then(value=>{
+                messengerVM.currentChat = value.data.id;
+            });
+        })
         return profile;
     },
     printProfiles:(users)=>{

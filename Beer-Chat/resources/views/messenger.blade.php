@@ -32,12 +32,12 @@
                         </button>
                     </form>
                 </div>
-                <form class="search-block">
+                <div class="search-block">
                     <input class="search-input" id="search-message">
                     <div class="search-btn">
                         <i data-feather="search" class="icon"></i>
                     </div>
-                </form>
+                </div>
                 <div class="found-users">
                     <ul class="user-profiles" id="users">
 

@@ -4,6 +4,7 @@
 
     use App\Events\MessageDelete;
     use App\Events\MessageSend;
+    use App\Models\Chat;
     use App\Models\Message;
     use Illuminate\Database\Eloquent\Collection;
     use Illuminate\Http\Request;
@@ -13,7 +14,7 @@
 
     class ChatController extends Controller
     {
-        public function messages(string $chat_id): Collection|array
+        public function chat(string $chat_id): Collection|array
         {
             return Message::query()
                 ->where('chat_id', '=', $chat_id)
@@ -21,40 +22,33 @@
                 ->get();
         }
 
-        public function store(Request $request): Message
+        public function store(Request $request)
         {
             $request->validate(
                 [
-                    'message' => ['required', 'string', 'min:1']
+                    'user_id' => ['required', 'int'],
+                    "second_user_id" => ['required', 'int']
                 ]
             );
-
-            $message = Message::create(
-                [
-                    "text" => $request->message,
-                    "chat_id" => 1,
-                    "user_id" => Auth::id(),
-                ]
-            );
-            $message->user = Auth::user();
-            broadcast(new MessageSend($request->user(), $message));
-            return $message;
-        }
-
-        public function delete(string $message_id)
-        {
-            $message = Message::where('id', $message_id)->first();
-            if ($message !== null) {
-                broadcast(new MessageDelete($message));
-                $res = $message->delete();
-                if ($res) {
-                    return $message;
+            $chat = Chat::where(
+                function ($query) use ($request) {
+                    $query->where('first_user_id', '=', $request->user_id)
+                        ->where('second_user_id', '=', $request->second_user_id);
                 }
+            )->orWhere(
+                function ($query) use ($request) {
+                    $query->where('second_user_id', '=', $request->user_id)
+                        ->where('first_user_id', '=', $request->second_user_id);
+                }
+            )->get();
+            if (count($chat) == 0) {
+                return Chat::create(
+                    [
+                        "first_user_id" => $request->user_id,
+                        "second_user_id" => $request->second_user_id,
+                    ]
+                );
             }
-            throw ValidationException::withMessages(
-                [
-                    'message_id' => ['message is not defined'],
-                ]
-            );
+            return $chat->first();
         }
     }

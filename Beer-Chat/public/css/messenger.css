@@ -188,6 +188,7 @@
 }
 
 .found-users .user-profiles .profile {
+  cursor: pointer;
   width: 100%;
   box-sizing: border-box;
   display: flex;

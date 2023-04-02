@@ -21,4 +21,8 @@
         {
             return $this->belongsTo(User::class);
         }
+        public function chat(): BelongsTo
+        {
+            return $this->belongsTo(Chat::class);
+        }
     }

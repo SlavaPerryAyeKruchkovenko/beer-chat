@@ -4581,13 +4581,19 @@ var apiManager = {
     return axios.get("/user/" + name);
   },
   getAllMessages: function getAllMessages(chatId) {
-    return axios.get("/messages/" + chatId);
+    return axios.get("/chat/" + chatId);
   },
   getUserById: function getUserById(userId) {
     return axios.get("/user/" + userId);
   },
   deleteMessage: function deleteMessage(messageId) {
     return axios["delete"]("/message/".concat(messageId));
+  },
+  createChat: function createChat(firstUser, secondUser) {
+    return axios.post("/chat", {
+      user_id: firstUser,
+      second_user_id: secondUser
+    });
   }
 };
 var messengerVM = {
@@ -4692,6 +4698,11 @@ var messengerVM = {
     profile.setAttribute("id", "user".concat(user.id));
     profile.classList.add("profile");
     profile.innerHTML = "\n            <img class=\"min-user-image\" src=\"".concat(messengerVM.getUserAvatar(user), "\" alt=\"profile\">\n            <span class=\"profile-name\">").concat(user.name, "</span>\n            ").concat(deleteSvg);
+    profile.addEventListener("click", function () {
+      apiManager.createChat(messengerVM.currentUser, user.id).then(function (value) {
+        messengerVM.currentChat = value.data.id;
+      });
+    });
     return profile;
   },
   printProfiles: function printProfiles(users) {
