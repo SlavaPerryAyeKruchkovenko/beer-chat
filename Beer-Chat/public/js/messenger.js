@@ -4572,16 +4572,21 @@ function bit_rol(d, _) {
   return d << _ | d >>> 32 - _;
 }
 var apiManager = {
-  sendMessage: function sendMessage(text) {
+  sendMessage: function sendMessage(text, chatId, userId) {
     return axios.post("/message", {
-      message: text
+      message: text,
+      chat_id: chatId,
+      user_id: userId
     });
   },
   getUserByName: function getUserByName(name) {
     return axios.get("/user/" + name);
   },
+  getAllChats: function getAllChats(userId) {
+    return axios.get("/chats/ " + userId);
+  },
   getAllMessages: function getAllMessages(chatId) {
-    return axios.get("/chat/" + chatId);
+    return axios.get("/messages/" + chatId);
   },
   getUserById: function getUserById(userId) {
     return axios.get("/user/" + userId);
@@ -4597,6 +4602,7 @@ var apiManager = {
   }
 };
 var messengerVM = {
+  chatHeader: document.getElementById("chat-name"),
   currentUser: Number(document.querySelector('meta[name="user_id"]').content),
   messageBlock: document.getElementById("messages"),
   usersBlock: document.getElementById('users'),
@@ -4604,10 +4610,12 @@ var messengerVM = {
   userChats: [],
   sendMessage: function sendMessage(input) {
     var text = input.value;
-    apiManager.sendMessage(text)["catch"](function (e) {
-      console.log(e);
-    });
-    input.value = "";
+    if (messengerVM.currentChat && messengerVM.currentChat.id != null) {
+      apiManager.sendMessage(text, messengerVM.currentChat.id, messengerVM.currentUser)["catch"](function (e) {
+        console.log(e);
+      });
+      input.value = "";
+    }
     return false;
   },
   appendMessage: function appendMessage(message, user) {
@@ -4681,29 +4689,59 @@ var messengerVM = {
     });
   },
   printAllMessages: function printAllMessages(chatId) {
+    messengerVM.messageBlock.innerHTML = "<svg class=\"loader\" width=\"200\" height=\"200\">\n                <circle cx=\"100\" cy=\"100\" r=\"50\" class=\"circle_loader\" id=\"circle\"></circle>\n                <text x=\"100\" y=\"100\" id=\"pct\" ></text>\n            </svg>";
+    startAnimate();
+    messengerVM.messageBlock.classList.add("center");
     apiManager.getAllMessages(chatId).then(function (data) {
       if (data.data) {
+        stopAnimate();
+        messengerVM.messageBlock.innerHTML = "";
+        messengerVM.messageBlock.classList.remove("center");
         messengerVM.writeAllMessages(data.data);
       }
     })["catch"](function (e) {
+      stopAnimate();
+      messengerVM.messageBlock.innerHTML = "";
+      messengerVM.messageBlock.classList.remove("center");
       console.log(e);
     });
   },
   getProfileView: function getProfileView(user) {
     var profile = document.createElement('div');
-    var deleteSvg = feather.icons['trash-2'].toSvg({
-      "class": 'icon',
-      id: 'delete'
-    });
     profile.setAttribute("id", "user".concat(user.id));
     profile.classList.add("profile");
-    profile.innerHTML = "\n            <img class=\"min-user-image\" src=\"".concat(messengerVM.getUserAvatar(user), "\" alt=\"profile\">\n            <span class=\"profile-name\">").concat(user.name, "</span>\n            ").concat(deleteSvg);
+    profile.innerHTML = "\n            <img class=\"min-user-image\" src=\"".concat(messengerVM.getUserAvatar(user), "\" alt=\"profile\">\n            <span class=\"profile-name\">").concat(user.name, "</span>");
     profile.addEventListener("click", function () {
-      apiManager.createChat(messengerVM.currentUser, user.id).then(function (value) {
-        messengerVM.currentChat = value.data.id;
-      });
+      if (!(messengerVM.currentChat && (messengerVM.currentChat.second_user_id === user.id || messengerVM.currentChat.first_user_id === user.id))) {
+        messengerVM.openChat(user);
+      }
     });
     return profile;
+  },
+  openChat: function openChat(user) {
+    messengerVM.messageBlock.innerHTML = "<svg class=\"loader\" width=\"200\" height=\"200\">\n                <circle cx=\"100\" cy=\"100\" r=\"50\" class=\"circle_loader\" id=\"circle\"></circle>\n                <text x=\"100\" y=\"100\" id=\"pct\" ></text>\n            </svg>";
+    messengerVM.messageBlock.classList.add("center");
+    startAnimate();
+    apiManager.createChat(messengerVM.currentUser, user.id).then(function (data) {
+      stopAnimate();
+      messengerVM.messageBlock.innerHTML = "";
+      messengerVM.messageBlock.classList.remove("center");
+      messengerVM.currentChat = data.data;
+      messengerVM.writeAllMessages(data.data.messages);
+      messengerVM.chatHeader.textContent = user.name;
+      console.log("chat.".concat(messengerVM.currentChat.id));
+      Echo["private"]("chat.".concat(messengerVM.currentChat.id)).listen('MessageSend', function (e) {
+        console.log(e);
+        messengerVM.appendMessage(e.message, e.user);
+      });
+      Echo["private"]("chat.".concat(messengerVM.currentChat.id)).listen('MessageDelete', function (e) {
+        messengerVM.deleteMessageView(e.message.id);
+      });
+    })["catch"](function () {
+      stopAnimate();
+      messengerVM.messageBlock.innerHTML = "";
+      messengerVM.messageBlock.classList.remove("center");
+    });
   },
   printProfiles: function printProfiles(users) {
     users.forEach(function (user) {
@@ -4730,23 +4768,38 @@ var messengerVM = {
       }
     });
     messengerVM.userChats = users;
+  },
+  printAllChats: function printAllChats() {
+    apiManager.getAllChats(messengerVM.currentUser).then(function (data) {
+      var chats = data.data;
+      chats.forEach(function (chat) {
+        if (chat.from.id !== messengerVM.currentUser) {
+          messengerVM.userChats.push(chat.from);
+          var profileHtml = messengerVM.getProfileView(chat.from);
+          messengerVM.usersBlock.appendChild(profileHtml);
+        } else {
+          messengerVM.userChats.push(chat.to);
+          var _profileHtml = messengerVM.getProfileView(chat.to);
+          messengerVM.usersBlock.appendChild(_profileHtml);
+        }
+      });
+    })["catch"](function (e) {
+      console.log(e);
+    });
   }
 };
 document.addEventListener("DOMContentLoaded", function () {
-  Echo["private"]('chat').listen('MessageSend', function (e) {
-    messengerVM.appendMessage(e.message, e.user);
-  });
-  Echo["private"]('chat').listen('MessageDelete', function (e) {
-    messengerVM.deleteMessageView(e.message.id);
-  });
   Echo["private"]('users').listen('UserGetByName', function (e) {
     messengerVM.printProfiles(e.users);
   });
   var sender = document.getElementById("messageSender");
   var message = document.getElementById("message");
   var searchInput = document.getElementById("search-message");
-  if (messengerVM.currentChat !== null) {
-    messengerVM.printAllMessages(messengerVM.currentChat);
+  if (messengerVM.currentChat && messengerVM.currentChat.id != null) {
+    messengerVM.printAllMessages(messengerVM.currentChat.id);
+  }
+  if (messengerVM.currentUser !== null) {
+    messengerVM.printAllChats();
   }
   sender.addEventListener("click", function () {
     return messengerVM.sendMessage(message);

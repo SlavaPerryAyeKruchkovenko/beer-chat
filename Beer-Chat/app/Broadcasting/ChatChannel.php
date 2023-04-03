@@ -21,9 +21,10 @@ class ChatChannel
      * Authenticate the user's access to the channel.
      *
      * @param User $user
-     * @return array|bool
+     * @param string $chat
+     * @return bool
      */
-    public function join(User $user)
+    public function join(User $user, string $chat) : bool
     {
         Auth::id() === $user->id;
         return true;

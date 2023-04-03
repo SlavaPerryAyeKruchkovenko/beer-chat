@@ -2,27 +2,21 @@
 
     namespace App\Http\Controllers;
 
-    use App\Events\MessageDelete;
-    use App\Events\MessageSend;
     use App\Models\Chat;
-    use App\Models\Message;
     use Illuminate\Database\Eloquent\Collection;
     use Illuminate\Http\Request;
-    use Illuminate\Support\Facades\Auth;
-    use Illuminate\Validation\ValidationException;
 
 
     class ChatController extends Controller
     {
-        public function chat(string $chat_id): Collection|array
+        public function getAllChats($user_id): Collection
         {
-            return Message::query()
-                ->where('chat_id', '=', $chat_id)
-                ->with('user')
-                ->get();
+            return Chat::where(
+                "first_user_id",$user_id
+            )->orWhere("second_user_id",$user_id)->with("from")->with("to")->get();
         }
 
-        public function store(Request $request)
+        public function store(Request $request): Chat
         {
             $request->validate(
                 [
@@ -40,14 +34,16 @@
                     $query->where('second_user_id', '=', $request->user_id)
                         ->where('first_user_id', '=', $request->second_user_id);
                 }
-            )->get();
+            )->with("messages.user")->get();
             if (count($chat) == 0) {
-                return Chat::create(
+                $chat = Chat::create(
                     [
                         "first_user_id" => $request->user_id,
                         "second_user_id" => $request->second_user_id,
                     ]
                 );
+                $chat->messages = [];
+                return $chat;
             }
             return $chat->first();
         }

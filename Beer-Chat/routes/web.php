@@ -47,8 +47,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
     Route::get(RouteServiceProvider::MESSENGER, [MessengerController::class, 'create'])->
     middleware('auth')->name('messenger');
 
-    Route::get("/chat/{chat_id}", [ChatController::class, 'chat'])->
-    middleware('auth')->name('chat.id');
+    Route::get("/chats/{user_id}", [ChatController::class, 'getAllChats'])->
+    middleware('auth')->name('user.chats');
 
     Route::post("/chat", [ChatController::class, 'store'])->
     middleware('auth')->name('chat.create');
@@ -59,6 +59,5 @@ use App\Http\Controllers\Auth\ResetPasswordController;
     Route::post("/message", [MessageController::class, 'store'])->
     middleware('auth')->name('message.send');
 
-
-
-
+    Route::get("/messages/{chat_id}", [MessageController::class, 'getAllMessages'])->
+    middleware('auth')->name('chat.id');
