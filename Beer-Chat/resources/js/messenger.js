@@ -101,6 +101,7 @@ const messengerVM = {
                 document.removeEventListener("click",closeMenu,true);
             }
         }
+        document.addEventListener('contextmenu', closeMenu,true);
         document.addEventListener('click', closeMenu,true);
         return menu;
     },
@@ -166,11 +167,8 @@ const messengerVM = {
             messengerVM.currentChat = data.data;
             messengerVM.writeAllMessages(data.data.messages)
             messengerVM.chatHeader.textContent = user.name;
-
-            console.log(`chat.${messengerVM.currentChat.id}`)
             Echo.private(`chat.${messengerVM.currentChat.id}`)
                 .listen('MessageSend', (e) => {
-                    console.log(e)
                     messengerVM.appendMessage(e.message, e.user);
                 });
             Echo.private(`chat.${messengerVM.currentChat.id}`)

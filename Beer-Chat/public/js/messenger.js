@@ -4673,6 +4673,7 @@ var messengerVM = {
         document.removeEventListener("click", closeMenu, true);
       }
     };
+    document.addEventListener('contextmenu', closeMenu, true);
     document.addEventListener('click', closeMenu, true);
     return menu;
   },
@@ -4729,9 +4730,7 @@ var messengerVM = {
       messengerVM.currentChat = data.data;
       messengerVM.writeAllMessages(data.data.messages);
       messengerVM.chatHeader.textContent = user.name;
-      console.log("chat.".concat(messengerVM.currentChat.id));
       Echo["private"]("chat.".concat(messengerVM.currentChat.id)).listen('MessageSend', function (e) {
-        console.log(e);
         messengerVM.appendMessage(e.message, e.user);
       });
       Echo["private"]("chat.".concat(messengerVM.currentChat.id)).listen('MessageDelete', function (e) {

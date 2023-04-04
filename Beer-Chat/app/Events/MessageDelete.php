@@ -2,6 +2,7 @@
 
     namespace App\Events;
 
+    use App\Models\Chat;
     use App\Models\Message;
     use Illuminate\Broadcasting\Channel;
     use Illuminate\Broadcasting\InteractsWithSockets;
@@ -35,6 +36,7 @@
          */
         public function broadcastOn(): Channel|PrivateChannel|array
         {
-            return new PrivateChannel('chat');
+            $chat = Chat::where("id",$this->message->chat_id)->first();
+            return new PrivateChannel('chat.'.$chat->id);
         }
     }

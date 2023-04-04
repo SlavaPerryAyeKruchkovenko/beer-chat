@@ -2,6 +2,7 @@
 
     namespace App\Events;
 
+    use App\Models\Chat;
     use App\Models\Message;
     use App\Models\User;
     use Illuminate\Broadcasting\Channel;
@@ -11,6 +12,8 @@
     use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
     use Illuminate\Foundation\Events\Dispatchable;
     use Illuminate\Queue\SerializesModels;
+    use Illuminate\Support\Facades\Log;
+    use Symfony\Component\Console\Output\ConsoleOutput;
 
     class MessageSend implements ShouldBroadcast
     {
@@ -18,8 +21,8 @@
         use InteractsWithSockets;
         use SerializesModels;
 
-        public $user;
-        public $message;
+        public User $user;
+        public Message $message;
 
         /**
          * Create a new event instance.
@@ -32,7 +35,16 @@
             $this->user = $user;
             $this->message = $message;
         }
-
+        /**
+         * Check translate.
+         *
+         * @return bool
+         */
+        public function broadcastWhen(): bool
+        {
+            $chat = Chat::where("id",$this->message->chat_id)->first();
+            return $chat->first_user_id === $this->user->id || $chat->second_user_id === $this->user->id;
+        }
         /**
          * Get the channels the event should broadcast on.
          *
@@ -40,6 +52,7 @@
          */
         public function broadcastOn(): Channel|PrivateChannel|array
         {
-            return new PrivateChannel('chat');
+            $chat = Chat::where("id",$this->message->chat_id)->first();
+            return new PrivateChannel('chat.'.$chat->id);
         }
     }
