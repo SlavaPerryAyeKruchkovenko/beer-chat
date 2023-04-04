@@ -5,5 +5,8 @@
     "/css/messenger.css": "/css/messenger.css",
     "/css/authentication.css": "/css/authentication.css",
     "/css/reset200802.css": "/css/reset200802.css",
-    "/js/authentication.js": "/js/authentication.js"
+    "/js/authentication.js": "/js/authentication.js",
+    "/js/bootstrap.js": "/js/bootstrap.js",
+    "/js/loader.js": "/js/loader.js",
+    "/js/messenger.js": "/js/messenger.js"
 }

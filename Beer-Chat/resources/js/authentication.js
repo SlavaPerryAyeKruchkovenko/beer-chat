@@ -1,8 +1,7 @@
 const feather = require('feather-icons')
 
 const authenticationVM = {
-    changePasswordVisible: (inputId) => {
-        const passwordInput = document.getElementById(inputId);
+    changePasswordVisible: (passwordInput) => {
         if(passwordInput && passwordInput.type.toLowerCase() === "password"){
             passwordInput.type = 'text';
             return true;
@@ -13,9 +12,6 @@ const authenticationVM = {
         }
         return true;
     },
-    stopRefreshPage: (e) => {
-        e.preventDefault()
-    },
     deleteAlert: ()=>{
         const alert = document.getElementById('success-alert')
         alert.parentNode.parentNode.removeChild(alert.parentNode);
@@ -24,16 +20,16 @@ const authenticationVM = {
 document.addEventListener("DOMContentLoaded", () => {
     const eyes = document.getElementsByClassName('eye');
     Array.from(eyes).forEach((eye,index)=>{
-        const number = index===0?'':index+1
-        eye.onclick = () => {
-            const isVisible = authenticationVM.changePasswordVisible("password"+number)
+        eye.addEventListener("click",() => {
+            const password = eye.parentNode.querySelector("input")
+            const isVisible = authenticationVM.changePasswordVisible(password)
             if(isVisible){
                 eye.innerHTML = feather.icons['eye-off'].toSvg({ class: 'eye-btn' })
             }
             else{
                 eye.innerHTML = feather.icons['eye'].toSvg({ class: 'eye-btn' })
             }
-        }
+        },false);
     })
     const closeBtn = document.getElementById('close-alert');
     if(closeBtn){
