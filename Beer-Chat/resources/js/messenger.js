@@ -38,6 +38,7 @@ const messengerVM = {
     usersBlock: document.getElementById('users'),
     currentChat: null,
     userChats : [],
+    openChats: [],
     sendMessage: (input) => {
         const text = input.value
         if(messengerVM.currentChat && messengerVM.currentChat.id != null){
@@ -167,14 +168,19 @@ const messengerVM = {
             messengerVM.currentChat = data.data;
             messengerVM.writeAllMessages(data.data.messages)
             messengerVM.chatHeader.textContent = user.name;
-            Echo.private(`chat.${messengerVM.currentChat.id}`)
-                .listen('MessageSend', (e) => {
-                    messengerVM.appendMessage(e.message, e.user);
-                });
-            Echo.private(`chat.${messengerVM.currentChat.id}`)
-                .listen('MessageDelete', (e) => {
-                    messengerVM.deleteMessageView(e.message.id);
-                });
+            if(!messengerVM.openChats.find(x=>x.id === messengerVM.currentChat.id)){
+                messengerVM.openChats.push({id:messengerVM.currentChat.id})
+                console.log(messengerVM.openChats)
+                Echo.private(`chat.${messengerVM.currentChat.id}`)
+                    .listen('MessageSend', (e) => {
+                        messengerVM.appendMessage(e.message, e.user);
+                    });
+                Echo.private(`chat.${messengerVM.currentChat.id}`)
+                    .listen('MessageDelete', (e) => {
+                        messengerVM.deleteMessageView(e.message.id);
+                    });
+            }
+
         }).catch(() => {
             stopAnimate()
             messengerVM.messageBlock.innerHTML = "";

@@ -4608,6 +4608,7 @@ var messengerVM = {
   usersBlock: document.getElementById('users'),
   currentChat: null,
   userChats: [],
+  openChats: [],
   sendMessage: function sendMessage(input) {
     var text = input.value;
     if (messengerVM.currentChat && messengerVM.currentChat.id != null) {
@@ -4730,12 +4731,20 @@ var messengerVM = {
       messengerVM.currentChat = data.data;
       messengerVM.writeAllMessages(data.data.messages);
       messengerVM.chatHeader.textContent = user.name;
-      Echo["private"]("chat.".concat(messengerVM.currentChat.id)).listen('MessageSend', function (e) {
-        messengerVM.appendMessage(e.message, e.user);
-      });
-      Echo["private"]("chat.".concat(messengerVM.currentChat.id)).listen('MessageDelete', function (e) {
-        messengerVM.deleteMessageView(e.message.id);
-      });
+      if (!messengerVM.openChats.find(function (x) {
+        return x.id === messengerVM.currentChat.id;
+      })) {
+        messengerVM.openChats.push({
+          id: messengerVM.currentChat.id
+        });
+        console.log(messengerVM.openChats);
+        Echo["private"]("chat.".concat(messengerVM.currentChat.id)).listen('MessageSend', function (e) {
+          messengerVM.appendMessage(e.message, e.user);
+        });
+        Echo["private"]("chat.".concat(messengerVM.currentChat.id)).listen('MessageDelete', function (e) {
+          messengerVM.deleteMessageView(e.message.id);
+        });
+      }
     })["catch"](function () {
       stopAnimate();
       messengerVM.messageBlock.innerHTML = "";
