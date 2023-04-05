@@ -167,7 +167,6 @@ const messengerVM = {
             messengerVM.chatHeader.textContent = user.name;
             if(!messengerVM.openChats.find(x=>x.id === messengerVM.currentChat.id)){
                 messengerVM.openChats.push({id:messengerVM.currentChat.id})
-                console.log(messengerVM.openChats)
                 Echo.private(`chat.${messengerVM.currentChat.id}`)
                     .listen('MessageSend', (e) => {
                         messengerVM.appendMessage(e.message, e.user);
@@ -230,7 +229,6 @@ const messengerVM = {
 document.addEventListener("DOMContentLoaded", () => {
     Echo.private('users')
         .listen('UserGetByName', (e) => {
-            console.log(e)
             messengerVM.printProfiles(e.users);
         });
     const sender = document.getElementById("messageSender");

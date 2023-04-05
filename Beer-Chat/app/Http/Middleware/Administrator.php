@@ -2,24 +2,29 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Closure;
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
-class Administrator extends  Middleware
+class Administrator
 {
     /**
      * Handle an incoming request.
      *
-     * @param $request
+     * @param Request $request
+     * @param Closure $next
      * @return string
      */
-    protected function redirectTo($request): string
+    public function handle(Request $request, Closure $next)
     {
-        $user = Auth::user()->with('role');
-        dd($user);
-        if ($user) {
-            return route('login');
+
+        $user = User::where('id',Auth::user()->id)->with('role')->first();
+        if ($user->role_id !== 2) {
+            return redirect(RouteServiceProvider::HOME);
         }
+        return $next($request);
     }
 }

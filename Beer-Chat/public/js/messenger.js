@@ -4734,7 +4734,6 @@ var messengerVM = {
         messengerVM.openChats.push({
           id: messengerVM.currentChat.id
         });
-        console.log(messengerVM.openChats);
         Echo["private"]("chat.".concat(messengerVM.currentChat.id)).listen('MessageSend', function (e) {
           messengerVM.appendMessage(e.message, e.user);
         });
@@ -4795,7 +4794,6 @@ var messengerVM = {
 };
 document.addEventListener("DOMContentLoaded", function () {
   Echo["private"]('users').listen('UserGetByName', function (e) {
-    console.log(e);
     messengerVM.printProfiles(e.users);
   });
   var sender = document.getElementById("messageSender");

@@ -28,65 +28,67 @@ use App\Http\Controllers\Auth\ResetPasswordController;
             Route::post('logout', 'destroy')->middleware('auth')->name('logout');
         }
     );
-    Route::controller("Auth\RegisterController")->middleware('guest')->group(
+    Route::controller("Auth\RegisterController")->group(
         function () {
-            Route::get('/register', 'create')->name('register');
-            Route::post('/register', 'store');
+            Route::get('/register', 'create')->middleware('guest')->name('register');
+            Route::post('/register', 'store')->middleware('guest');
         }
     );
 
-    Route::controller("Auth\ForgotPasswordController")->name('password.')->middleware('guest')->group(
+    Route::controller("Auth\ForgotPasswordController")->group(
         function () {
-            Route::get('/forgot-password', 'create')->name(
-                'request'
+            Route::get('/forgot-password', 'create')->middleware('guest')->name(
+                'password.request'
             );
-            Route::post('/forgot-password', 'store')->name(
-                'email'
-            );
-        }
-    );
-    Route::prefix("user")->name("user.")->
-    controller("UserController")->middleware('auth')->
-    group(
-        function () {
-            Route::get('/{name?}', 'userByName')->name(
-                'name'
-            );
-            Route::get('/', 'userByName')->name(
-                'name.default'
+            Route::post('/forgot-password', 'store')->middleware('guest')->name(
+                'password.email'
             );
         }
     );
-    Route::prefix("reset-password")->controller("Auth\ResetPasswordController")->
-    middleware('guest')->group(
+    Route::prefix("user")->controller("UserController")->group(
         function () {
-            Route::get('/', 'create')->name('password.reset');
-            Route::post('/', 'store')->name('password.update');
+            Route::get('/{name?}', 'userByName')->middleware('auth')->name(
+                'user.name'
+            );
+            Route::get('/', 'userByName')->middleware('auth')->name(
+                'user.name.default'
+            );
         }
     );
-    Route::controller("ChatController")->
-    middleware('auth')->group(
+    Route::prefix("reset-password")->controller("Auth\ResetPasswordController")->group(
         function () {
-            Route::get('/chats/{user_id}', 'getAllChats')->name('user.chats');
-            Route::post('/chat', 'store')->name('chat.create');
+            Route::get('/', 'create')->
+            middleware('guest')->name('password.reset');
+            Route::post('/', 'store')->
+            middleware('guest')->name('password.update');
+        }
+    );
+    Route::controller("ChatController")->group(
+        function () {
+            Route::get('/chats/{user_id}', 'getAllChats')->
+            middleware('auth')->name('user.chats');
+            Route::post('/chat', 'store')->
+            middleware('auth')->name('chat.create');
         }
     );
 
-    Route::controller("MessageController")->
-    middleware('auth')->group(
+    Route::controller("MessageController")->group(
         function () {
-            Route::delete("/message/{message_id}", 'delete')->name('message.delete');
+            Route::delete("/message/{message_id}", 'delete')
+                ->middleware('auth')->name('message.delete');
 
-            Route::post("/message", 'store')->name('message.send');
+            Route::post("/message", 'store')
+                ->middleware('auth')->name('message.send');
 
-            Route::get("/messages/{chat_id}", 'getAllMessages')->name('chat.id');
+            Route::get("/messages/{chat_id}", 'getAllMessages')
+                ->middleware('auth')->name('chat.id');
         }
     );
 
-    Route::prefix("admin")->controller("Admin\AdminController")->name("admin.")->
-    middleware('admin')->group(
+    Route::prefix("admin")->controller("Admin\AdminController")->group(
         function () {
-            Route::get('/', 'index')->name('index');
+            Route::get('/', 'index')->
+            middleware(['auth','admin'])->name('admin.index');
         }
     );
 
