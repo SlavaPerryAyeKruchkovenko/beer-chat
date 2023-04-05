@@ -57,11 +57,11 @@ use App\Http\Controllers\Auth\ResetPasswordController;
             );
         }
     );
-    Route::prefix("reset-password")->controller("ResetPasswordController")->
+    Route::prefix("reset-password")->controller("Auth\ResetPasswordController")->
     middleware('guest')->group(
         function () {
-            Route::get('/reset-password', 'create')->name('password.reset');
-            Route::post('/reset-password', 'store')->name('password.update');
+            Route::get('/', 'create')->name('password.reset');
+            Route::post('/', 'store')->name('password.update');
         }
     );
     Route::controller("ChatController")->
@@ -80,6 +80,13 @@ use App\Http\Controllers\Auth\ResetPasswordController;
             Route::post("/message", 'store')->name('message.send');
 
             Route::get("/messages/{chat_id}", 'getAllMessages')->name('chat.id');
+        }
+    );
+
+    Route::prefix("admin")->controller("Admin\AdminController")->name("admin.")->
+    middleware('admin')->group(
+        function () {
+            Route::get('/', 'index')->name('index');
         }
     );
 
