@@ -12,6 +12,11 @@
     {
         public function index(): Factory|View|Application
         {
-            return view("admin/index");
+            $user = auth()->user();
+            $url = "https://www.gravatar.com/avatar/" . md5($user->email) .
+                "?d=https://ui-avatars.com/api/" .
+                $user->username .
+                "/128/random";
+            return view("admin/index", ['user' => $user, 'url' => $url]);
         }
     }

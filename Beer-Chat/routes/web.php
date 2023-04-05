@@ -9,7 +9,6 @@ use App\Http\Controllers\Auth\ResetPasswordController;
     use App\Http\Controllers\UserController;
     use App\Providers\RouteServiceProvider;
     use Illuminate\Support\Facades\Route;
-    use App\Http\Controllers\Auth\RegisterController;
 
     Route::get(
         RouteServiceProvider::HOME,
