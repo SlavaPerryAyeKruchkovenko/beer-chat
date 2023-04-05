@@ -18,9 +18,6 @@ const apiManager = {
     getAllMessages: (chatId) => {
         return axios.get("/messages/" + chatId);
     },
-    getUserById: (userId) => {
-        return axios.get("/user/" + userId);
-    },
     deleteMessage: (messageId) => {
         return axios.delete(`/message/${messageId}`);
     },
@@ -233,6 +230,7 @@ const messengerVM = {
 document.addEventListener("DOMContentLoaded", () => {
     Echo.private('users')
         .listen('UserGetByName', (e) => {
+            console.log(e)
             messengerVM.printProfiles(e.users);
         });
     const sender = document.getElementById("messageSender");
@@ -248,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sender.addEventListener("click", () => messengerVM.sendMessage(message));
 
     searchInput.addEventListener("input", (e) => {
-        apiManager.getUserByName(e.target.value)
+        apiManager.getUserByName(e.target.value);
     })
 
     message.addEventListener("keyup", (e) => {

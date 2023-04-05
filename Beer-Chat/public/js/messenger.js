@@ -4588,9 +4588,6 @@ var apiManager = {
   getAllMessages: function getAllMessages(chatId) {
     return axios.get("/messages/" + chatId);
   },
-  getUserById: function getUserById(userId) {
-    return axios.get("/user/" + userId);
-  },
   deleteMessage: function deleteMessage(messageId) {
     return axios["delete"]("/message/".concat(messageId));
   },
@@ -4798,6 +4795,7 @@ var messengerVM = {
 };
 document.addEventListener("DOMContentLoaded", function () {
   Echo["private"]('users').listen('UserGetByName', function (e) {
+    console.log(e);
     messengerVM.printProfiles(e.users);
   });
   var sender = document.getElementById("messageSender");
