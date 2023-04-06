@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @if (Auth::check())
-        <meta name="user_id" content="{{ Auth::user()->id }}" />
+        <meta name="user_id" content="{{ Auth::user()->id }}"/>
     @endif
     <link rel="stylesheet" href="{{ asset("css/reset200802.css") }}">
     <link rel="stylesheet" href="{{ asset("css/messenger.css") }}"/>
     <link rel="stylesheet" href="{{ asset("css/app.css") }}"/>
+    <link rel="stylesheet" href="{{ asset("css/admin.css") }}"/>
     <script src="{{ asset("js/bootstrap.js") }}"></script>
     <title>BEER CHAT</title>
 </head>
@@ -48,9 +49,24 @@
     <li class="messenger-l-column">
         <section class="messenger-column">
             <div class="messenger-header">
-                <span class="messenger-header-text" id="chat-name">Admin, {{$user->name}}</span>
+                <span class="messenger-header-text" id="chat-name">Admin panel</span>
             </div>
-
+            <div class="big-user-info">
+                <img class="big-user-image" src="{{$url}}" alt="profile">
+                <ul class="text-user-info">
+                    <li class="text-field" id="u_username">{{$user->username}}</li>
+                    <li class="text-field" id="u_name">{{$user->name}}</li>
+                    <li class="text-field" id="u_email">{{$user->email}}</li>
+                    <li class="text-field" id="u_role">
+                        <select id="r_selector" class="select-css">
+                            <option value=”r_user”>user</option>
+                            <option value=”r_admin”>admin</option>
+                            <option value=”r_fsb”>fsb</option>
+                        </select>
+                    </li>
+                </ul>
+                <button class="ban-button">Ban</button>
+            </div>
         </section>
     </li>
 </ul>

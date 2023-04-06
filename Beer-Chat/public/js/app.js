@@ -2527,6 +2527,17 @@ feather.replace();
 
 /***/ }),
 
+/***/ "./resources/sass/admin.sass":
+/*!***********************************!*\
+  !*** ./resources/sass/admin.sass ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/app.sass":
 /*!*********************************!*\
   !*** ./resources/sass/app.sass ***!
@@ -2572,9 +2583,9 @@ feather.replace();
 /***/ }),
 
 /***/ 0:
-/*!********************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.sass ./resources/sass/main.sass ./resources/sass/messenger.sass ./resources/sass/authentication.css ./resources/css/reset200802.css ***!
-  \********************************************************************************************************************************************************************************************/
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.sass ./resources/sass/main.sass ./resources/sass/messenger.sass ./resources/sass/admin.sass ./resources/sass/authentication.css ./resources/css/reset200802.css ***!
+  \************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2582,6 +2593,7 @@ __webpack_require__(/*! D:\repoditory\beer-chat\Beer-Chat\resources\js\app.js */
 __webpack_require__(/*! D:\repoditory\beer-chat\Beer-Chat\resources\sass\app.sass */"./resources/sass/app.sass");
 __webpack_require__(/*! D:\repoditory\beer-chat\Beer-Chat\resources\sass\main.sass */"./resources/sass/main.sass");
 __webpack_require__(/*! D:\repoditory\beer-chat\Beer-Chat\resources\sass\messenger.sass */"./resources/sass/messenger.sass");
+__webpack_require__(/*! D:\repoditory\beer-chat\Beer-Chat\resources\sass\admin.sass */"./resources/sass/admin.sass");
 __webpack_require__(/*! D:\repoditory\beer-chat\Beer-Chat\resources\sass\authentication.css */"./resources/sass/authentication.css");
 module.exports = __webpack_require__(/*! D:\repoditory\beer-chat\Beer-Chat\resources\css\reset200802.css */"./resources/css/reset200802.css");
 
