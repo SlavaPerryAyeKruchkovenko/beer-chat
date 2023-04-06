@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Events\UserGetByName;
+use App\Models\Chat;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -12,14 +14,24 @@ class UserController extends Controller
     {
         return User::where('id', $id)->first();
     }
-    public function userByName(string $name = null): string | Collection
+
+    public function ban(string $id)
     {
-        if($name !== null){
-            $users = User::where('name', 'LIKE', '%'.$name.'%')->get();
-            if(count($users)>0){
+        $user = User::where('id', $id)->first();
+
+        $user->messages()->delete();
+        $user->chats()->delete();
+        return $user->delete();
+    }
+
+    public function userByName(string $name = null): string|Collection
+    {
+        if ($name !== null) {
+            $users = User::where('name', 'like', '%' . $name . '%')->get();
+            if (count($users) > 0) {
                 broadcast(new UserGetByName($users));
             }
-            return $users;
+            return $name;
         }
         return "user not found";
     }

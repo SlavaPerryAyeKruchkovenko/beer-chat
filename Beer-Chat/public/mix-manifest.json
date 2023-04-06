@@ -1,8 +1,11 @@
 {
+    "/js/MD5.js": "/js/MD5.js",
+    "/js/admin.js": "/js/admin.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/css/main.css": "/css/main.css",
     "/css/messenger.css": "/css/messenger.css",
+    "/css/admin.css": "/css/admin.css",
     "/css/authentication.css": "/css/authentication.css",
     "/css/reset200802.css": "/css/reset200802.css",
     "/js/authentication.js": "/js/authentication.js",

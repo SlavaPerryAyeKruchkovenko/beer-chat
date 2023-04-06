@@ -73,9 +73,9 @@
             </section>
         </li>
     </ul>
-
+<script src="{{asset("js/MD5.js")}}"></script>
 <script src="{{ asset("js/app.js") }}"></script>
 <script src="{{ asset("js/messenger.js") }}"></script>
-    <script src="{{ asset("js/loader.js") }}"></script>
+<script src="{{ asset("js/loader.js") }}"></script>
 </body>
 </html>

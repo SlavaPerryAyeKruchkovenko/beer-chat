@@ -9,7 +9,6 @@ use App\Http\Controllers\Auth\ResetPasswordController;
     use App\Http\Controllers\UserController;
     use App\Providers\RouteServiceProvider;
     use Illuminate\Support\Facades\Route;
-    use App\Http\Controllers\Auth\RegisterController;
 
     Route::get(
         RouteServiceProvider::HOME,
@@ -18,46 +17,83 @@ use App\Http\Controllers\Auth\ResetPasswordController;
         }
     );
 
-    Route::get('/login', [LoginController::class, 'create'])->middleware('guest')->name('login');
-    Route::post('/login', [LoginController::class, 'store'])->middleware('guest');
-    Route::post('logout', [LoginController::class, 'destroy'])->middleware('auth')->name('logout');
-
-    Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
-    Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
-
-    Route::get('/forgot-password', [ForgotPasswordController::class, 'create'])->middleware('guest')->name(
-        'password.request'
-    );
-    Route::post('/forgot-password', [ForgotPasswordController::class, 'store'])->middleware('guest')->name(
-        'password.email'
-    );
-
-    Route::get('/user/{id}', [UserController::class, 'user'])->whereNumber('id')->
-    middleware('auth')->name('user.id');
-
-    Route::get('/user/{name?}', [UserController::class, 'userByName'])->
-    middleware('auth')->name('user.name');
-
-    Route::get('/reset-password', [ResetPasswordController::class, 'create'])->
-    middleware('guest')->name('password.reset');
-
-    Route::post('/reset-password', [ResetPasswordController::class, 'store'])->
-    middleware('guest')->name('password.update');
-
     Route::get(RouteServiceProvider::MESSENGER, [MessengerController::class, 'create'])->
     middleware('auth')->name('messenger');
 
-    Route::get("/chats/{user_id}", [ChatController::class, 'getAllChats'])->
-    middleware('auth')->name('user.chats');
+    Route::controller("Auth\LoginController")->group(
+        function () {
+            Route::get('/login', 'create')->middleware('guest')->name('login');
+            Route::post('/login', 'store')->middleware('guest');
+            Route::post('logout', 'destroy')->middleware('auth')->name('logout');
+        }
+    );
+    Route::controller("Auth\RegisterController")->group(
+        function () {
+            Route::get('/register', 'create')->middleware('guest')->name('register');
+            Route::post('/register', 'store')->middleware('guest');
+        }
+    );
 
-    Route::post("/chat", [ChatController::class, 'store'])->
-    middleware('auth')->name('chat.create');
+    Route::controller("Auth\ForgotPasswordController")->group(
+        function () {
+            Route::get('/forgot-password', 'create')->middleware('guest')->name(
+                'password.request'
+            );
+            Route::post('/forgot-password', 'store')->middleware('guest')->name(
+                'password.email'
+            );
+        }
+    );
+    Route::prefix("user")->controller("UserController")->group(
+        function () {
+            Route::get('/{name?}', 'userByName')->middleware('auth')->name(
+                'user.name'
+            );
+            Route::get('/', 'userByName')->middleware('auth')->name(
+                'user.name.default'
+            );
+            Route::get('/id/{id}', 'user')->middleware('auth')->name(
+                'user.id'
+            );
+            Route::delete('/{id}', 'ban')->middleware('auth')->name(
+                'user.ban'
+            );
+        }
+    );
+    Route::prefix("reset-password")->controller("Auth\ResetPasswordController")->group(
+        function () {
+            Route::get('/', 'create')->
+            middleware('guest')->name('password.reset');
+            Route::post('/', 'store')->
+            middleware('guest')->name('password.update');
+        }
+    );
+    Route::controller("ChatController")->group(
+        function () {
+            Route::get('/chats/{user_id}', 'getAllChats')->
+            middleware('auth')->name('user.chats');
+            Route::post('/chat', 'store')->
+            middleware('auth')->name('chat.create');
+        }
+    );
 
-    Route::delete("/message/{message_id}", [MessageController::class, 'delete'])->
-    middleware('auth')->name('message.delete');
+    Route::controller("MessageController")->group(
+        function () {
+            Route::delete("/message/{message_id}", 'delete')
+                ->middleware('auth')->name('message.delete');
 
-    Route::post("/message", [MessageController::class, 'store'])->
-    middleware('auth')->name('message.send');
+            Route::post("/message", 'store')
+                ->middleware('auth')->name('message.send');
 
-    Route::get("/messages/{chat_id}", [MessageController::class, 'getAllMessages'])->
-    middleware('auth')->name('chat.id');
+            Route::get("/messages/{chat_id}", 'getAllMessages')
+                ->middleware('auth')->name('chat.id');
+        }
+    );
+
+    Route::prefix("admin")->controller("Admin\AdminController")->group(
+        function () {
+            Route::get('/', 'index')->
+            middleware(['auth','admin'])->name('admin.index');
+        }
+    );
+
