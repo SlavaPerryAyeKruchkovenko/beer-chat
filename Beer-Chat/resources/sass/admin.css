@@ -1,4 +1,5 @@
 .big-user-info {
+  height: 176px;
   width: 100%;
   box-sizing: border-box;
   padding: 24px;
@@ -34,6 +35,52 @@
   font-family: Ubuntu, sans-serif;
   font-size: 24px;
   cursor: pointer;
+}
+
+.admin-chats {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+.admin-chats .admin-chats-header {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 6px 12px;
+  box-sizing: border-box;
+  width: 100%;
+  background: #6f2f01;
+}
+.admin-chats .header-name {
+  text-align: center;
+  font-size: 24px;
+  color: white;
+  font-family: Ubuntu, sans-serif;
+}
+
+.user-chats {
+  width: 100%;
+  padding: 12px;
+  max-height: calc(100% - 280px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.user-chats .profile {
+  border: 1px solid black;
+  border-radius: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  font-family: Ubuntu, sans-serif;
+  cursor: auto;
+}
+.user-chats .profile-name {
+  font-size: 24px;
+  margin-left: 24px;
+  line-height: 36px;
+  max-height: 36px;
 }
 
 .select-css {

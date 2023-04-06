@@ -67,6 +67,17 @@
                 </ul>
                 <button class="ban-button">Ban</button>
             </div>
+            <div class="admin-chats">
+                <div class="admin-chats-header">
+                    <span class="header-name">user's chats</span>
+                </div>
+                <ul class="user-chats">
+                    <li class="profile">
+                        <img class="user-image" src="{{$url}}" alt="profile">
+                        <span class="profile-name">{{$user->username}}</span>
+                    </li>
+                </ul>
+            </div>
         </section>
     </li>
 </ul>
