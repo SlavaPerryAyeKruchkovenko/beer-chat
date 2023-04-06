@@ -2,18 +2,34 @@
 
     namespace App\Http\Controllers;
 
+    use App\Events\MessageSend;
     use App\Models\Chat;
+    use App\Models\Message;
+    use Illuminate\Broadcasting\BroadcastException;
     use Illuminate\Database\Eloquent\Collection;
+    use Illuminate\Database\QueryException;
     use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\Log;
 
 
     class ChatController extends Controller
     {
-        public function getAllChats($user_id): Collection
+        public function getAllChats($user_id): Collection|string
         {
-            return Chat::where(
-                "first_user_id",$user_id
-            )->orWhere("second_user_id",$user_id)->with("from")->with("to")->get();
+            try {
+                return Chat::where(
+                    "first_user_id",
+                    $user_id
+                )->orWhere("second_user_id", $user_id)->with("from")->with("to")->get();
+            } catch (QueryException $ex) {
+                Log::error($ex);
+                abort(405);
+            } catch (\Exception $ex) {
+                Log::error($ex);
+                abort(501);
+            }
+            return "error";
         }
 
         public function store(Request $request): Chat

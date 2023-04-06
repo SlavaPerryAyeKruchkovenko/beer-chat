@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -11,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -29,18 +31,24 @@ class RegisterController extends Controller
                 'username' => ['string']
             ]
         );
+        try {
+            $user = User::create(
+                [
+                    'name' => $request->name,
+                    'username' => $request->username,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                ]
+            );
 
-        $user = User::create(
-            [
-                'name' => $request->name,
-                'username' => $request->username,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]
-        );
+            Auth::login($user);
 
-        Auth::login($user);
+            return redirect()->route('messenger');
+        } catch (\Exception $ex) {
+            Log::error($ex);
+            abort(405);
+        }
+        return back();
 
-        return redirect()->route('messenger');
     }
 }
