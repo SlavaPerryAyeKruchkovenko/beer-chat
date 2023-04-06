@@ -52,6 +52,12 @@ use App\Http\Controllers\Auth\ResetPasswordController;
             Route::get('/', 'userByName')->middleware('auth')->name(
                 'user.name.default'
             );
+            Route::get('/id/{id}', 'user')->middleware('auth')->name(
+                'user.id'
+            );
+            Route::delete('/{id}', 'ban')->middleware('auth')->name(
+                'user.ban'
+            );
         }
     );
     Route::prefix("reset-password")->controller("Auth\ResetPasswordController")->group(

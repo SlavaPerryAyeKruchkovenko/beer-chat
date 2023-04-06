@@ -47,7 +47,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class);
     }
-
+    public function chats(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);

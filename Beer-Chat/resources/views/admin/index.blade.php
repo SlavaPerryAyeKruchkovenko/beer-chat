@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset("css/app.css") }}"/>
     <link rel="stylesheet" href="{{ asset("css/admin.css") }}"/>
     <script src="{{ asset("js/bootstrap.js") }}"></script>
-    <title>BEER CHAT</title>
+    <title>Admin panel</title>
 </head>
 <body class="messenger-body">
 <ul class="messenger">
@@ -47,35 +47,19 @@
         </section>
     </li>
     <li class="messenger-l-column">
-        <section class="messenger-column">
+        <section class="messenger-column" id="admin-section">
             <div class="messenger-header">
                 <span class="messenger-header-text" id="chat-name">Admin panel</span>
             </div>
-            <div class="big-user-info">
-                <img class="big-user-image" src="{{$url}}" alt="profile">
-                <ul class="text-user-info">
-                    <li class="text-field" id="u_username">{{$user->username}}</li>
-                    <li class="text-field" id="u_name">{{$user->name}}</li>
-                    <li class="text-field" id="u_email">{{$user->email}}</li>
-                    <li class="text-field" id="u_role">
-                        <select id="r_selector" class="select-css">
-                            <option value=”r_user”>user</option>
-                            <option value=”r_admin”>admin</option>
-                            <option value=”r_fsb”>fsb</option>
-                        </select>
-                    </li>
-                </ul>
-                <button class="ban-button">Ban</button>
+            <div class="big-user-info center" id="user-info">
+                <span class="notify-text">Select user for view info</span>
             </div>
             <div class="admin-chats">
                 <div class="admin-chats-header">
                     <span class="header-name">user's chats</span>
                 </div>
-                <ul class="user-chats">
-                    <li class="profile">
-                        <img class="user-image" src="{{$url}}" alt="profile">
-                        <span class="profile-name">{{$user->username}}</span>
-                    </li>
+                <ul class="user-chats center" id="user-chats">
+                    <span class="notify-text">Select user for view info</span>
                 </ul>
             </div>
         </section>
