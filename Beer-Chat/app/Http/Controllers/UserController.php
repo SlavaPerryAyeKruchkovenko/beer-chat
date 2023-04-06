@@ -17,7 +17,8 @@ class UserController extends Controller
 
     public function ban(string $id)
     {
-        $user = User::where('id', $id)->get();
+        $user = User::where('id', $id)->first();
+
         $user->messages()->delete();
         $user->chats()->delete();
         return $user->delete();
